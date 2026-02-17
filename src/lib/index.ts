@@ -1,9 +1,10 @@
-export {
-  ViewerProvider, useViewer, useViewerReady, useViewerStoreApi
-} from "./ViewerContext";
 export {ViewerCanvas} from "./ViewerCanvas";
-export {fetchManifest} from "./utils/fetchManifest";
+export {fetchManifest} from "./util/fetchManifest";
 
 export type {
   ViewerStore, ViewerState, ViewerActions
-} from "./store/ViewerStore.ts";
+} from "./ViewerStore.ts";
+export {useViewer} from "./useViewer.tsx";
+export {ViewerProvider} from "./ViewerProvider.tsx";
+export {useViewerReady} from "./useViewerReady.tsx";
+export {useViewerStore} from "./useViewerStore.tsx";
