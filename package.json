@@ -16,6 +16,7 @@
     }
   },
   "scripts": {
+    "start": "npm run dev",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
