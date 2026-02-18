@@ -1,5 +1,4 @@
 export {ViewerCanvas} from "./ViewerCanvas";
-export {fetchManifest} from "./util/fetchManifest";
 
 export type {
   ViewerStore, ViewerState, ViewerActions
