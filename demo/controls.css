@@ -1,0 +1,9 @@
+.controls {
+    position: absolute;
+    display: flex;
+    left: 50%;
+    top: 1em;
+    gap: 0.5em;
+    transform: translateX(-50%);
+    font-family: monospace;
+}

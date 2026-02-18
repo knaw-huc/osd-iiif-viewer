@@ -1,21 +1,10 @@
 import {createStore} from "zustand/vanilla";
-import type OpenSeadragon from "openseadragon";
+import {createInstanceSlice, type InstanceSlice} from "./InstanceSlice.ts";
+import {createControlSlice, type ControlSlice} from "./ControlSlice.ts";
 
-export type ViewerStore = ViewerState & ViewerActions;
+export type ViewerStore = InstanceSlice & ControlSlice;
 
-export interface ViewerState {
-  viewer: OpenSeadragon.Viewer | null;
-  viewerReady: boolean;
-}
-
-export interface ViewerActions {
-  setViewer: (viewer: OpenSeadragon.Viewer | null) => void;
-  setViewerReady: (viewerReady: boolean) => void;
-}
-
-export const createViewerStore = () => createStore<ViewerStore>((set) => ({
-  viewer: null,
-  viewerReady: false,
-  setViewer: (viewer) => set({viewer}),
-  setViewerReady: (viewerReady) => set({viewerReady}),
+export const createViewerStore = () => createStore<ViewerStore>((...a) => ({
+  ...createInstanceSlice(...a),
+  ...createControlSlice(...a),
 }));

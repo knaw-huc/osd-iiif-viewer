@@ -1,9 +1,9 @@
 import {createRoot} from "react-dom/client";
 import {StrictMode} from "react";
-import Example from "./Example.tsx";
+import {Examples} from "./Examples.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Example />
+    <Examples />
   </StrictMode>
 );

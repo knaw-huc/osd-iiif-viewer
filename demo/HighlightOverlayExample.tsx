@@ -6,7 +6,6 @@ import {
 import {useEffect, useState} from "react";
 import type {
   Annotation,
-  AnnotationBody,
   AnnotationPage,
   AnnotationTarget,
   Body,
@@ -22,9 +21,14 @@ import {
 } from "../src/lib/HighlightOverlay.tsx";
 import type {Id} from "../src/lib/Id.ts";
 import "./tooltip.css"
+import {
+  fetchJson,
+  getTileSourceFromManifest,
+  isResourceBody,
+  toArray
+} from "./utils.ts";
 
-export default function Example() {
-
+export function HighlightOverlayExample() {
   const manifestUrl = "https://globalise-huygens.github.io/document-view-sandbox/iiif/manifest.json";
   const documentVijf = 314;
 
@@ -107,14 +111,6 @@ function getAnnotationUrl(manifest: Manifest, index: number): string | null {
   return typeof ref === "string" ? ref : ref.id;
 }
 
-async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Could not fetch annotation page: ${response.status}`);
-  }
-  return await response.json();
-}
-
 function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
   const texts: Record<Id, string> = {};
   const fragments: Highlight[] = [];
@@ -158,37 +154,6 @@ function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
   return {texts, fragments};
 }
 
-function getTileSourceFromManifest(
-  manifest: Manifest,
-  index: number
-): string {
-  const canvas = manifest.items[index]
-    ?? orThrow(`No canvas at index ${index}`);
-  const page = canvas.items
-      ?.find(a => a.type === 'AnnotationPage')
-    ?? orThrow('No page item');
-  const painting = page.items
-      ?.find(a => a.motivation === 'painting')
-    ?? orThrow('No painting item');
-
-  const bodies = toArray(painting.body
-    ?? orThrow('No painting body'));
-  const body = bodies
-      .filter(isResourceBody)
-      .find(isImageResource)
-    ?? orThrow('No image service found on canvas');
-
-  const service = body.service[0];
-  const id = "@id" in service
-    ? service["@id"]
-    : orThrow('No id');
-  return id + "/info.json";
-}
-
-function toArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value];
-}
-
 type AnnotationWithBodyAndTarget = Annotation & {
   body: NonNullable<Annotation['body']>;
   target: NonNullable<Annotation['target']>;
@@ -196,10 +161,6 @@ type AnnotationWithBodyAndTarget = Annotation & {
 
 function hasBodyAndTarget(a: Annotation): a is AnnotationWithBodyAndTarget {
   return a.body !== undefined && a.target !== undefined;
-}
-
-function isResourceBody(b: AnnotationBody): b is Exclude<Body, string> {
-  return typeof b !== "string";
 }
 
 function isResourceTarget(t: AnnotationTarget): t is Exclude<Target, string> {
@@ -221,12 +182,4 @@ type TextualBody = { type: "TextualBody"; value: string };
 
 function isTextualBody(b: Exclude<Body, string>): b is TextualBody {
   return b.type === "TextualBody";
-}
-
-type ImageResource = Exclude<Body, string> & {
-  service: Array<Record<string, unknown>>;
-};
-
-function isImageResource(b: Exclude<Body, string>): b is ImageResource {
-  return "service" in b && Array.isArray(b.service) && !!b.service.length;
 }
