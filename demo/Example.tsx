@@ -17,7 +17,7 @@ import type {
 } from "@iiif/presentation-3";
 import {orThrow} from "../src/lib/util/orThrow.ts";
 import {
-  type Fragment,
+  type Highlight,
   HighlightOverlay
 } from "../src/lib/HighlightOverlay.tsx";
 import type {Id} from "../src/lib/Id.ts";
@@ -29,7 +29,7 @@ export default function Example() {
   const documentVijf = 314;
 
   const [tileSource, setTileSource] = useState<string>();
-  const [fragments, setFragments] = useState<Fragment[]>([]);
+  const [fragments, setFragments] = useState<Highlight[]>([]);
   const [fragmentTexts, setFragmentTexts] = useState<Record<Id, string>>({});
   const [tooltip, setTooltip] = useState<TooltipProps | null>();
 
@@ -58,7 +58,7 @@ export default function Example() {
       <div style={{width: "100%", height: "100vh"}}>
         <ViewerCanvas tileSource={tileSource}/>
         <HighlightOverlay
-          fragments={fragments}
+          highlights={fragments}
           onHover={(fragment, event) => {
             if (!fragment) {
               setTooltip(null);
@@ -117,7 +117,7 @@ async function fetchJson<T>(url: string): Promise<T> {
 
 function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
   const texts: Record<Id, string> = {};
-  const fragments: Fragment[] = [];
+  const fragments: Highlight[] = [];
 
   const items = annotationPage.items
     ?? orThrow('No annotation items')

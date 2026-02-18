@@ -4,24 +4,24 @@ import {useEffect} from "react";
 import type {Id} from "./Id.ts";
 import {assertSvgElement} from "./util/assertSvgElement.ts";
 
-export type Fragment = {
+export type Highlight = {
   id: Id;
   path: string;
 };
 
-type FragmentHighlightOverlayProps = {
-  fragments: Fragment[];
-  onHover?: (fragment: Id | null, event: MouseEvent) => void;
+type HighlightOverlayProps = {
+  highlights: Highlight[];
+  onHover?: (highlightId: Id | null, event: MouseEvent) => void;
 };
 
 export function HighlightOverlay(
-  {fragments, onHover = noop}: FragmentHighlightOverlayProps
+  {highlights, onHover = noop}: HighlightOverlayProps
 ) {
   const viewer = useViewer();
   const ready = useViewerReady();
 
   useEffect(() => {
-    if (!viewer || !ready || !fragments.length) {
+    if (!viewer || !ready || !highlights.length) {
       return;
     }
 
@@ -34,7 +34,7 @@ export function HighlightOverlay(
     const imageRect = item.imageToViewportRectangle(0, 0, size.x, size.y);
     const overlayElements: HTMLElement[] = [];
 
-    for (const fragment of fragments) {
+    for (const highlight of highlights) {
       const container = document.createElement("div");
       container.style.position = "absolute";
       container.style.pointerEvents = "none";
@@ -47,7 +47,7 @@ export function HighlightOverlay(
 
       const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
-      g.innerHTML = fragment.path;
+      g.innerHTML = highlight.path;
       const shape = g.firstElementChild;
       assertSvgElement(shape)
 
@@ -57,10 +57,10 @@ export function HighlightOverlay(
 
       shape.addEventListener("mouseenter", (event) => {
         shape.setAttribute("fill", "rgba(0,0,0,0.1)");
-        onHover(fragment.id, event);
+        onHover(highlight.id, event);
       });
       shape.addEventListener("mousemove", (event) => {
-        onHover(fragment.id, event);
+        onHover(highlight.id, event);
       });
       shape.addEventListener("mouseleave", (event) => {
         shape.setAttribute("fill", "transparent");
@@ -77,7 +77,7 @@ export function HighlightOverlay(
     return () => {
       overlayElements.forEach((el) => viewer.removeOverlay(el));
     };
-  }, [viewer, ready, fragments, onHover]);
+  }, [viewer, ready, highlights, onHover]);
 
   return null;
 }
