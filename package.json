@@ -1,38 +1,40 @@
 {
-  "name": "osd-iiif-viewer",
-  "private": true,
+  "name": "@knaw-huc/osd-iiif-viewer",
   "version": "0.0.0",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
-  "main": "./dist/osd-iiif-viewer.umd.js",
-  "module": "./dist/osd-iiif-viewer.es.js",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/osd-iiif-viewer.es.js",
-      "require": "./dist/osd-iiif-viewer.umd.js"
-    }
-  },
   "scripts": {
-    "start": "npm run dev",
+    "start": "vite",
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
+    "build": "vite build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "eslint:fix": "eslint --fix src/ demo/"
+    "lint": "eslint .",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "openseadragon": "^5.0.1",
+    "zustand": "^5.0.9"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": ">=18",
+    "react-dom": ">=18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@iiif/presentation-3": "^2.2.3",
-    "@stylistic/eslint-plugin": "^5.8.0",
+    "@stylistic/eslint-plugin": "^4.0.0",
     "@types/node": "^24.10.1",
     "@types/openseadragon": "^5.0.1",
     "@types/react": "^19.2.5",
@@ -48,10 +50,6 @@
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.0.18"
-  },
-  "dependencies": {
-    "openseadragon": "^5.0.1",
-    "zustand": "^5.0.9"
+    "vitest": "^3.2.1"
   }
 }

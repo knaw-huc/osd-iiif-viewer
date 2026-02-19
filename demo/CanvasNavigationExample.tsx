@@ -45,7 +45,7 @@ function NavigationBar() {
           onClick={prev}
           disabled={!currentIndex}
         >
-          prev
+          Prev
         </button>
         <button
           onClick={handleLuck}
@@ -56,7 +56,7 @@ function NavigationBar() {
           onClick={next}
           disabled={currentIndex === total - 1}
         >
-          next
+          Next
         </button>
       </div>
     </div>

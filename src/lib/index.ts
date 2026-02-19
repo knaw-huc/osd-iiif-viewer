@@ -1,10 +1,14 @@
 export {ViewerCanvas} from './ViewerCanvas';
-
-export type {ViewerStore} from './ViewerStore.ts';
-export type {InstanceSlice} from './InstanceSlice.ts';
-export type {ControlSlice} from './ControlSlice.ts';
-export {useViewer} from './useViewer.tsx';
-export {useViewerControls} from './useViewerControls.tsx';
-export {ViewerProvider} from './ViewerProvider.tsx';
-export {useViewerReady} from './useViewerReady.tsx';
-export {useViewerStore} from './useViewerStore.tsx';
+export {ViewerProvider} from './ViewerProvider';
+export {useViewer} from './useViewer';
+export {useViewerControls} from './useViewerControls';
+export {useViewerReady} from './useViewerReady';
+export {useViewerStore} from './useViewerStore';
+export {useManifest, useLoadManifest} from './manifest/useManifest';
+export {useCanvas} from './manifest/useCanvas';
+export type {
+  ViewerManifest,
+  ViewerCanvas as ViewerCanvasModel,
+  ViewerRange,
+  ViewerMetadata
+} from './manifest/model';

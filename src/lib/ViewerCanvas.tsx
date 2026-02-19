@@ -1,7 +1,7 @@
 import {Viewer} from 'openseadragon';
 import {useEffect, useRef} from 'react';
 import {useViewerStore} from './useViewerStore.tsx';
-import {extractTileSource} from './manifest/extractTileSource.ts';
+import {findTileSource} from './manifest/findTileSource.ts';
 import {useCanvas} from './manifest/useCanvas.tsx';
 
 type ViewerCanvasProps = {
@@ -14,7 +14,7 @@ export function ViewerCanvas(
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
   const {current} = useCanvas();
-  const tileSource = current ? extractTileSource(current) : null;
+  const tileSource = current ? findTileSource(current) : null;
 
   useEffect(() => {
     if (!containerRef.current || !tileSource) {
