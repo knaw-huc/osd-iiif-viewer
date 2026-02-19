@@ -21,8 +21,9 @@ import {
 import type {Id} from '../src/lib/Id.ts';
 import {useCanvas} from '../src/lib/manifest/useCanvas.tsx';
 import {fetchJson, toArray, isResourceBody} from './utils.ts';
-import './tooltip.css';
 import {ManifestLoader} from './ManifestLoader.tsx';
+
+import './tooltip.css';
 
 const manifestUrl = 'https://globalise-huygens.github.io/' +
   'document-view-sandbox/iiif/manifest.json';

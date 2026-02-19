@@ -1,8 +1,8 @@
 import {useViewerReady, ViewerCanvas, ViewerProvider} from '../src/lib';
 import {useCanvas} from '../src/lib/manifest/useCanvas.tsx';
+import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './navigation.css'
-import {ManifestLoader} from './ManifestLoader.tsx';
 
 const manifestUrl = 'https://globalise-huygens.github.io/' +
   'document-view-sandbox/iiif/manifest.json';

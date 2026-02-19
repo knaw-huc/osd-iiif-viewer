@@ -1,13 +1,14 @@
 import {type RefObject, useRef} from 'react';
 import {useViewerControls, ViewerCanvas, ViewerProvider} from '../src/lib';
-import './controls.css';
 import {ManifestLoader} from './ManifestLoader.tsx';
+
+import './controls.css';
 
 const manifestUrl = 'https://globalise-huygens.github.io/' +
   'document-view-sandbox/iiif/manifest.json';
 const documentVijf = 314;
 
-export function ControlsExample() {
+export function CustomControlsExample() {
   const fullscreenRef = useRef<HTMLDivElement>(null);
 
   return (

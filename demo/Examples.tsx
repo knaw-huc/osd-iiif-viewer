@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {HighlightOverlayExample} from './HighlightOverlayExample.tsx';
-import {ControlsExample} from './ControlsExample.tsx';
+import {CustomControlsExample} from './CustomControlsExample.tsx';
 import {CanvasNavigationExample} from './CanvasNavigationExample.tsx';
 
 export function Examples() {
@@ -16,7 +16,7 @@ export function Examples() {
     return <HighlightOverlayExample/>;
   }
   if (hash === '#controls') {
-    return <ControlsExample/>;
+    return <CustomControlsExample/>;
   }
   if (hash === '#navigation') {
     return <CanvasNavigationExample/>;
