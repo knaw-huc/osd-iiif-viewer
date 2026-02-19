@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {HighlightOverlayExample} from './HighlightOverlayExample.tsx';
 import {CustomControlsExample} from './CustomControlsExample.tsx';
 import {CanvasNavigationExample} from './CanvasNavigationExample.tsx';
+import {MinimalExample} from "./MinimalExample.tsx";
 
 export function Examples() {
   const [hash, setHash] = useState(window.location.hash);
@@ -21,9 +22,13 @@ export function Examples() {
   if (hash === '#navigation') {
     return <CanvasNavigationExample/>;
   }
+  if (hash === '#minimal') {
+    return <MinimalExample/>;
+  }
 
   return (
     <ul>
+      <li><a href="#minimal">Minimal example</a></li>
       <li><a href="#highlight">Highlight Overlay</a></li>
       <li><a href="#controls">Custom Controls</a></li>
       <li><a href="#navigation">Canvas Navigation</a></li>
