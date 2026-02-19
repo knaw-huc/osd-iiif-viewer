@@ -1,4 +1,4 @@
-import {useViewerStoreSelector} from "./useViewerStoreSelector.tsx";
+import {useViewerStoreSelector} from './useViewerStoreSelector.tsx';
 
 export function useViewerReady() {
   return useViewerStoreSelector((s) => s.viewerReady);

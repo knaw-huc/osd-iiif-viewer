@@ -1,27 +1,30 @@
-import {type TileSourceOptions, Viewer} from "openseadragon";
-import {useEffect, useRef} from "react";
-import {useViewerStore} from "./useViewerStore.tsx";
+import {Viewer} from 'openseadragon';
+import {useEffect, useRef} from 'react';
+import {useViewerStore} from './useViewerStore.tsx';
+import {extractTileSource} from './manifest/extractTileSource.ts';
+import {useCanvas} from './manifest/useCanvas.tsx';
 
 type ViewerCanvasProps = {
-  tileSource: string | TileSourceOptions;
   showControls?: boolean;
 };
 
 export function ViewerCanvas(
-  {tileSource, showControls = true}: ViewerCanvasProps
+  {showControls = true}: ViewerCanvasProps
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
+  const {current} = useCanvas();
+  const tileSource = current ? extractTileSource(current) : null;
 
   useEffect(() => {
-    if (!containerRef.current) {
+    if (!containerRef.current || !tileSource) {
       return;
     }
 
     const viewer = new Viewer({
       element: containerRef.current,
-      prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-      crossOriginPolicy: "Anonymous",
+      prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+      crossOriginPolicy: 'Anonymous',
       tileSources: tileSource,
       showNavigationControl: showControls,
     });
@@ -29,7 +32,7 @@ export function ViewerCanvas(
     const state = store.getState();
     state.setViewer(viewer);
 
-    viewer.addOnceHandler("open", () => {
+    viewer.addOnceHandler('open', () => {
       const state = store.getState();
       state.setViewerReady(true);
       state.setZoomLevel(viewer.viewport.getZoom());
@@ -41,12 +44,12 @@ export function ViewerCanvas(
       store.getState().setZoomLevel(viewer.viewport.getZoom());
     };
 
-    viewer.addHandler("animation-start", onZoom);
-    viewer.addHandler("animation-finish", onZoom);
+    viewer.addHandler('animation-start', onZoom);
+    viewer.addHandler('animation-finish', onZoom);
 
     return () => {
-      viewer.removeHandler("animation-start", onZoom);
-      viewer.removeHandler("animation-finish", onZoom);
+      viewer.removeHandler('animation-start', onZoom);
+      viewer.removeHandler('animation-finish', onZoom);
       viewer.destroy();
       const state = store.getState();
       state.setViewer(null);
@@ -61,6 +64,6 @@ export function ViewerCanvas(
   return <div
     id="viewer"
     ref={containerRef}
-    style={{width: "100%", height: "100%"}}
+    style={{width: '100%', height: '100%'}}
   />;
 }

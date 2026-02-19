@@ -1,4 +1,4 @@
-const defaultLanguage = "en";
+const defaultLanguage = 'en';
 
 /**
  * Extract display string in preferred language, or english, or first available
@@ -7,8 +7,8 @@ export function findLanguage(
   translations: unknown,
   lang = defaultLanguage
 ): string {
-  if (!translations || typeof translations !== "object") {
-    return "";
+  if (!translations || typeof translations !== 'object') {
+    return '';
   }
   const map = translations as Record<string, string[]>;
 
@@ -17,9 +17,9 @@ export function findLanguage(
 
   return tryLang(lang)
     ?? tryLang(defaultLanguage)
-    ?? tryLang("none")
+    ?? tryLang('none')
     ?? firstValue(map)
-    ?? "";
+    ?? '';
 }
 
 function firstValue(map: Record<string, string[]>): string | null {

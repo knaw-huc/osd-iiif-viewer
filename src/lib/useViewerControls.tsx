@@ -1,7 +1,7 @@
-import {useCallback, useEffect, type RefObject} from "react";
-import {useViewerStoreSelector} from "./useViewerStoreSelector.tsx";
-import {useViewer} from "./useViewer.tsx";
-import {useViewerStore} from "./useViewerStore.tsx";
+import {useCallback, useEffect, type RefObject} from 'react';
+import {useViewerStoreSelector} from './useViewerStoreSelector.tsx';
+import {useViewer} from './useViewer.tsx';
+import {useViewerStore} from './useViewerStore.tsx';
 
 /**
  * Expose zoom and full-screen controls and state
@@ -25,9 +25,9 @@ export function useViewerControls(
     const onFullscreenChange = () => {
       store.getState().setIsFullPage(!!document.fullscreenElement);
     };
-    document.addEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener('fullscreenchange', onFullscreenChange);
     return () => document.removeEventListener(
-      "fullscreenchange",
+      'fullscreenchange',
       onFullscreenChange
     );
   }, [store]);

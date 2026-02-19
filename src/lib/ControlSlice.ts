@@ -1,5 +1,5 @@
-import type {StateCreator} from "zustand/vanilla";
-import type {ViewerStore} from "./ViewerStore.ts";
+import type {StateCreator} from 'zustand/vanilla';
+import type {ViewerStore} from './ViewerStore.ts';
 
 export interface ControlSlice {
   zoomLevel: number | null;

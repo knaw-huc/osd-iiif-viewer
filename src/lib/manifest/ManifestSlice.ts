@@ -1,7 +1,7 @@
-import type {StateCreator} from "zustand/vanilla";
-import type {ViewerManifest} from "./model.ts";
-import {parseManifest} from "./parseManifest.ts";
-import type {ViewerStore} from "../ViewerStore.ts";
+import type {StateCreator} from 'zustand/vanilla';
+import type {ViewerManifest} from './model.ts';
+import {parseManifest} from './parseManifest.ts';
+import type {ViewerStore} from '../ViewerStore.ts';
 
 export type ManifestState = {
   isLoading: boolean;
@@ -15,7 +15,7 @@ export interface ManifestSlice {
   loadManifest: (url: string) => Promise<void>;
 }
 
-const defaultManifest = {data: null, url: "", isLoading: false, error: null};
+const defaultManifest = {data: null, url: '', isLoading: false, error: null};
 
 export const createManifestSlice: StateCreator<
   ViewerStore,
@@ -41,7 +41,7 @@ export const createManifestSlice: StateCreator<
       const data = parseManifest(json);
       set({manifest: {...done, data}});
     } catch (e) {
-      const error = e instanceof Error ? e.message : "Unknown error";
+      const error = e instanceof Error ? e.message : 'Unknown error';
       set({manifest: {...done, error}});
     }
   }

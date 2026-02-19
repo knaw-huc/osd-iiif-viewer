@@ -1,8 +1,8 @@
-import {useViewer} from "./useViewer.tsx";
-import {useViewerReady} from "./useViewerReady.tsx";
-import {useEffect} from "react";
-import type {Id} from "./Id.ts";
-import {assertSvgElement} from "./util/assertSvgElement.ts";
+import {useViewer} from './useViewer.tsx';
+import {useViewerReady} from './useViewerReady.tsx';
+import {useEffect} from 'react';
+import type {Id} from './Id.ts';
+import {assertSvgElement} from './util/assertSvgElement.ts';
 
 export type Highlight = {
   id: Id;
@@ -35,35 +35,35 @@ export function HighlightOverlay(
     const overlayElements: HTMLElement[] = [];
 
     for (const highlight of highlights) {
-      const container = document.createElement("div");
-      container.style.position = "absolute";
-      container.style.pointerEvents = "none";
+      const container = document.createElement('div');
+      container.style.position = 'absolute';
+      container.style.pointerEvents = 'none';
 
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("viewBox", `0 0 ${size.x} ${size.y}`);
-      svg.style.width = "100%";
-      svg.style.height = "100%";
-      svg.style.pointerEvents = "none";
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', `0 0 ${size.x} ${size.y}`);
+      svg.style.width = '100%';
+      svg.style.height = '100%';
+      svg.style.pointerEvents = 'none';
 
-      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
       g.innerHTML = highlight.path;
       const shape = g.firstElementChild;
       assertSvgElement(shape)
 
-      shape.setAttribute("fill", "transparent");
-      shape.style.pointerEvents = "auto";
-      shape.style.cursor = "pointer";
+      shape.setAttribute('fill', 'transparent');
+      shape.style.pointerEvents = 'auto';
+      shape.style.cursor = 'pointer';
 
-      shape.addEventListener("mouseenter", (event) => {
-        shape.setAttribute("fill", "rgba(0,0,0,0.1)");
+      shape.addEventListener('mouseenter', (event) => {
+        shape.setAttribute('fill', 'rgba(0,0,0,0.1)');
         onHover(highlight.id, event);
       });
-      shape.addEventListener("mousemove", (event) => {
+      shape.addEventListener('mousemove', (event) => {
         onHover(highlight.id, event);
       });
-      shape.addEventListener("mouseleave", (event) => {
-        shape.setAttribute("fill", "transparent");
+      shape.addEventListener('mouseleave', (event) => {
+        shape.setAttribute('fill', 'transparent');
         onHover(null, event);
       });
 

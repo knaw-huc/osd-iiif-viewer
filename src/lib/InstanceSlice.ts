@@ -1,6 +1,6 @@
-import type {StateCreator} from "zustand/vanilla";
-import type OpenSeadragon from "openseadragon";
-import type {ViewerStore} from "./ViewerStore.ts";
+import type {StateCreator} from 'zustand/vanilla';
+import type OpenSeadragon from 'openseadragon';
+import type {ViewerStore} from './ViewerStore.ts';
 
 export interface InstanceSlice {
   viewer: OpenSeadragon.Viewer | null;

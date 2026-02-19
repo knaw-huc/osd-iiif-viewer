@@ -1,11 +1,11 @@
-import {createStore} from "zustand/vanilla";
-import {createInstanceSlice, type InstanceSlice} from "./InstanceSlice.ts";
-import {createControlSlice, type ControlSlice} from "./ControlSlice.ts";
+import {createStore} from 'zustand/vanilla';
+import {createInstanceSlice, type InstanceSlice} from './InstanceSlice.ts';
+import {createControlSlice, type ControlSlice} from './ControlSlice.ts';
 import {
   createManifestSlice,
   type ManifestSlice
-} from "./manifest/ManifestSlice.ts";
-import {type CanvasSlice, createCanvasSlice} from "./manifest/CanvasSlice.ts";
+} from './manifest/ManifestSlice.ts';
+import {type CanvasSlice, createCanvasSlice} from './manifest/CanvasSlice.ts';
 
 export type ViewerStore =
   & InstanceSlice

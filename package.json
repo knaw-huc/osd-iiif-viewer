@@ -22,7 +22,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "eslint:fix": "eslint --fix src/ demo/"
   },
   "peerDependencies": {
     "react": "^19.2.0",
