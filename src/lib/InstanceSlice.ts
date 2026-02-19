@@ -2,7 +2,7 @@ import type {StateCreator} from 'zustand/vanilla';
 import type OpenSeadragon from 'openseadragon';
 import type {ViewerStore} from './ViewerStore.ts';
 
-export interface InstanceSlice {
+export type InstanceSlice = {
   viewer: OpenSeadragon.Viewer | null;
   viewerReady: boolean;
   setViewer: (viewer: OpenSeadragon.Viewer | null) => void;

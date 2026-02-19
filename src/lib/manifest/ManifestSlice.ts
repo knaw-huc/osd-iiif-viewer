@@ -10,7 +10,7 @@ export type ManifestState = {
   error: string | null;
 };
 
-export interface ManifestSlice {
+export type ManifestSlice = {
   manifest: ManifestState;
   loadManifest: (url: string) => Promise<void>;
 }

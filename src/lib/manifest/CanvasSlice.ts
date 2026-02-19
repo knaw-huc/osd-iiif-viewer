@@ -5,7 +5,7 @@ export type CanvasState = {
   currentIndex: number;
 };
 
-export interface CanvasSlice {
+export type CanvasSlice = {
   canvas: CanvasState;
   goToCanvas: (index: number) => void;
   nextCanvas: () => void;

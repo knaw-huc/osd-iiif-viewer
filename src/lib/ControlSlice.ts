@@ -1,7 +1,7 @@
 import type {StateCreator} from 'zustand/vanilla';
 import type {ViewerStore} from './ViewerStore.ts';
 
-export interface ControlSlice {
+export type ControlSlice = {
   zoomLevel: number | null;
   zoomMin: number | null;
   zoomMax: number | null;
