@@ -1,3 +1,5 @@
+export {HighlightOverlay, type Highlight} from './HighlightOverlay.tsx';
+
 export {ViewerCanvas} from './ViewerCanvas';
 export {ViewerProvider} from './ViewerProvider';
 export {useViewer} from './useViewer';

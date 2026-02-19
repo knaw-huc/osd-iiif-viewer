@@ -18,9 +18,9 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime',
-        'openseadragon',
-        'zustand', 'zustand/vanilla', 'zustand/index',
+        /^react/,
+        /^zustand/,
+        /^openseadragon/,
       ],
       output: {
         entryFileNames: '[name].js',
