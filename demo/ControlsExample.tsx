@@ -5,7 +5,8 @@ import {useViewerControls, ViewerCanvas, ViewerProvider} from "../src/lib";
 import './controls.css'
 
 export function ControlsExample() {
-  const manifestUrl = "https://globalise-huygens.github.io/document-view-sandbox/iiif/manifest.json";
+  const manifestUrl = "https://globalise-huygens.github.io/" +
+    "document-view-sandbox/iiif/manifest.json";
   const documentVijf = 314;
 
   const fullscreenRef = useRef<HTMLDivElement>(null);

@@ -9,7 +9,12 @@ export interface InstanceSlice {
   setViewerReady: (viewerReady: boolean) => void;
 }
 
-export const createInstanceSlice: StateCreator<ViewerStore, [], [], InstanceSlice> = (set) => ({
+export const createInstanceSlice: StateCreator<
+  ViewerStore,
+  [],
+  [],
+  InstanceSlice
+> = (set) => ({
   viewer: null,
   viewerReady: false,
   setViewer: (viewer) => set({viewer}),

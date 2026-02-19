@@ -12,7 +12,12 @@ export interface ControlSlice {
   setIsFullPage: (isFullPage: boolean) => void;
 }
 
-export const createControlSlice: StateCreator<ViewerStore, [], [], ControlSlice> = (set) => ({
+export const createControlSlice: StateCreator<
+  ViewerStore,
+  [],
+  [],
+  ControlSlice
+> = (set) => ({
   zoomLevel: null,
   zoomMin: null,
   zoomMax: null,

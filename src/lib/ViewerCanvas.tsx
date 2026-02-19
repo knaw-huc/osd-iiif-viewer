@@ -7,7 +7,9 @@ type ViewerCanvasProps = {
   showControls?: boolean;
 };
 
-export function ViewerCanvas({tileSource, showControls = true}: ViewerCanvasProps) {
+export function ViewerCanvas(
+  {tileSource, showControls = true}: ViewerCanvasProps
+) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
 

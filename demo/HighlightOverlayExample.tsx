@@ -29,7 +29,8 @@ import {
 } from "./utils.ts";
 
 export function HighlightOverlayExample() {
-  const manifestUrl = "https://globalise-huygens.github.io/document-view-sandbox/iiif/manifest.json";
+  const manifestUrl = "https://globalise-huygens.github.io/" +
+    "document-view-sandbox/iiif/manifest.json";
   const documentVijf = 314;
 
   const [tileSource, setTileSource] = useState<string>();
@@ -117,11 +118,12 @@ function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
 
   const items = annotationPage.items
     ?? orThrow('No annotation items')
+
+  const isSupplementingLine = (a: Annotation) =>
+    a.motivation === "supplementing" &&
+    a.textGranularity === "line";
   const annotations = items
-    .filter((a: Annotation) =>
-      a.motivation === "supplementing" &&
-      a.textGranularity === "line"
-    )
+    .filter(isSupplementingLine)
     .filter(hasBodyAndTarget);
 
   for (const a of annotations) {

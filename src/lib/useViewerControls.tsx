@@ -11,7 +11,9 @@ import {useViewerStore} from "./useViewerStore.tsx";
  * the viewer to <body> and destroys the React component tree.
  * @see https://github.com/openseadragon/openseadragon/issues/449
  */
-export function useViewerControls(fullscreenRef: RefObject<HTMLElement | null>) {
+export function useViewerControls(
+  fullscreenRef: RefObject<HTMLElement | null>
+) {
   const viewer = useViewer();
   const store = useViewerStore();
   const zoomLevel = useViewerStoreSelector((s) => s.zoomLevel);
@@ -24,7 +26,10 @@ export function useViewerControls(fullscreenRef: RefObject<HTMLElement | null>) 
       store.getState().setIsFullPage(!!document.fullscreenElement);
     };
     document.addEventListener("fullscreenchange", onFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener(
+      "fullscreenchange",
+      onFullscreenChange
+    );
   }, [store]);
 
   const zoomIn = useCallback(() => {
@@ -40,15 +45,25 @@ export function useViewerControls(fullscreenRef: RefObject<HTMLElement | null>) 
   }, [viewer]);
 
   const toggleFullPage = useCallback(() => {
-    const el = fullscreenRef?.current;
-    if (!el) return;
-
+    const container = fullscreenRef?.current;
+    if (!container) {
+      return;
+    }
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {
-      el.requestFullscreen();
+      container.requestFullscreen();
     }
   }, [fullscreenRef]);
 
-  return {zoomIn, zoomOut, home, toggleFullPage, zoomLevel, zoomMin, zoomMax, isFullPage};
+  return {
+    zoomIn,
+    zoomOut,
+    home,
+    toggleFullPage,
+    zoomLevel,
+    zoomMin,
+    zoomMax,
+    isFullPage
+  };
 }
