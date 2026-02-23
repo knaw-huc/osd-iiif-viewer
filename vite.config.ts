@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: resolve(__dirname, 'src/lib/index.ts'),
+        index: resolve(__dirname, 'src/index.ts'),
       },
       formats: ['es'],
     },

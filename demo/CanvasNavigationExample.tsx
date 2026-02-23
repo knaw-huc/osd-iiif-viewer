@@ -1,5 +1,5 @@
-import {useViewerReady, ViewerCanvas, ViewerProvider} from '../src/lib';
-import {useCanvas} from '../src/lib/manifest/useCanvas.tsx';
+import {useViewerReady, ViewerCanvas, ViewerProvider} from '../src';
+import {useCanvas} from '../src/manifest/useCanvas.tsx';
 import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './navigation.css'

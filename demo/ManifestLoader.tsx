@@ -1,8 +1,8 @@
 import {
   useLoadManifest,
   useManifest
-} from '../src/lib/manifest/useManifest.tsx';
-import {useCanvas} from '../src/lib/manifest/useCanvas.tsx';
+} from '../src/manifest/useManifest.tsx';
+import {useCanvas} from '../src/manifest/useCanvas.tsx';
 import {useEffect} from 'react';
 
 

@@ -3,11 +3,10 @@
 React wrapper around OpenSeadragon to display and browse image sources from iiif manifests.
 
 Current features (WIP):
-- Canvas navigation: previous/next/goTo(canvasIndex)
-- Highlight overlay: svg-overlays with hover callbacks
-- Zoom and fullscreen controls: exposed via hooks
-- State management: zustand store, also accessible via hooks
-- Manifest parsing: iiif manifests (v3, ImageService2)
+- Canvas navigation
+- Highlight overlay
+- Zoom and fullscreen controls
+- Manifest parsing (iiif manifests v3, ImageService2)
 
 ## Minimal example
 ```tsx
@@ -45,7 +44,3 @@ function Viewer() {
 }
 ```
 
-## Supported formats
-
-- IIIF Presentation API 3
-- ImageService2 (`@type: "ImageService2"`)

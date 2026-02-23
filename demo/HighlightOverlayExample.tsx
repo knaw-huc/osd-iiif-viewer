@@ -2,7 +2,7 @@ import {
   useViewerReady,
   ViewerCanvas,
   ViewerProvider,
-} from '../src/lib';
+} from '../src';
 import {useEffect, useState} from 'react';
 import type {
   Annotation,
@@ -13,13 +13,13 @@ import type {
   SpecificResource,
   Target,
 } from '@iiif/presentation-3';
-import {orThrow} from '../src/lib/util/orThrow.ts';
+import {orThrow} from '../src/util/orThrow.ts';
 import {
   type Highlight,
   HighlightOverlay
-} from '../src/lib/HighlightOverlay.tsx';
-import type {Id} from '../src/lib/Id.ts';
-import {useCanvas} from '../src/lib/manifest/useCanvas.tsx';
+} from '../src';
+import type {Id} from '../src/Id.ts';
+import {useCanvas} from '../src';
 import {fetchJson, toArray, isResourceBody} from './utils.ts';
 import {ManifestLoader} from './ManifestLoader.tsx';
 

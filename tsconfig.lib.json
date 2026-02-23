@@ -16,5 +16,5 @@
     "strict": true,
     "erasableSyntaxOnly": true
   },
-  "include": ["src/lib"]
+  "include": ["src"]
 }
