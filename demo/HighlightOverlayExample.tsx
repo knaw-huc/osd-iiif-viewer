@@ -1,4 +1,7 @@
 import {
+  Overlay,
+  useCanvas,
+  useImageInfo,
   useViewerReady,
   ViewerCanvas,
   ViewerProvider,
@@ -13,19 +16,15 @@ import type {
   SpecificResource,
   Target,
 } from '@iiif/presentation-3';
-import {orThrow} from '../src/util/orThrow.ts';
-import {
-  type Highlight,
-  HighlightOverlay
-} from '../src';
-import type {Id} from '../src/Id.ts';
-import {useCanvas} from '../src';
-import {fetchJson, toArray, isResourceBody} from './utils.ts';
-import {ManifestLoader} from './ManifestLoader.tsx';
+import {orThrow} from '../src/util/orThrow';
+import type {Id} from '../src/Id';
+import {fetchJson, isResourceBody, toArray} from './utils';
+import {ManifestLoader} from './ManifestLoader';
 
 import './tooltip.css';
 
-const manifestUrl = 'https://globalise-huygens.github.io/' +
+const manifestUrl =
+  'https://globalise-huygens.github.io/' +
   'document-view-sandbox/iiif/manifest.json';
 const documentVijf = 314;
 
@@ -39,46 +38,84 @@ export function HighlightOverlayExample() {
   );
 }
 
+type Fragment = {
+  id: Id;
+  text: string;
+  path: string;
+};
+
 function HighlightViewer() {
   const {current} = useCanvas();
-  const [fragments, setFragments] = useState<Highlight[]>([]);
-  const [fragmentTexts, setFragmentTexts] = useState<Record<Id, string>>({});
-  const [tooltip, setTooltip] = useState<TooltipProps | null>();
+  const imageInfo = useImageInfo();
+  const [fragments, setFragments] = useState<Fragment[]>([]);
+  const [tooltip, setTooltip] = useState<TooltipProps | null>(null);
 
   useEffect(() => {
     if (!current?.annotationPageIds.length) {
       return;
     }
+
     load(current.annotationPageIds[0]);
 
     async function load(url: string) {
       const annotationPage = await fetchJson<AnnotationPage>(url);
-      const result = getFragmentsFromAnnotationPage(annotationPage);
-      setFragments(result.fragments);
-      setFragmentTexts(result.texts);
+      setFragments(getFragmentsFromAnnotationPage(annotationPage));
     }
   }, [current]);
 
   return (
     <div style={{width: '100%', height: '100vh'}}>
       <ViewerCanvas/>
-      <HighlightOverlay
-        highlights={fragments}
-        onHover={(fragment, event) => {
-          if (!fragment) {
-            setTooltip(null);
-          } else {
-            setTooltip({
-              text: fragmentTexts[fragment],
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }
-        }}
-      />
+      {imageInfo && fragments.map((fragment) => (
+        <Overlay key={fragment.id} location={imageInfo.location}>
+          <Highlight
+            path={fragment.path}
+            size={imageInfo.size}
+            onHover={(hovering, e) => {
+              if (!hovering) {
+                setTooltip(null)
+                return;
+              }
+              setTooltip({text: fragment.text, x: e.clientX, y: e.clientY});
+            }}
+          />
+        </Overlay>
+      ))}
       <Status/>
       {tooltip && <Tooltip x={tooltip.x} y={tooltip.y} text={tooltip.text}/>}
     </div>
+  );
+}
+
+type HighlightProps = {
+  path: string;
+  size: OpenSeadragon.Point;
+  onHover: (hovering: boolean, event: React.MouseEvent) => void;
+};
+
+function Highlight({path, size, onHover}: HighlightProps) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <svg
+      viewBox={`0 0 ${size.x} ${size.y}`}
+      style={{width: '100%', height: '100%', pointerEvents: 'none'}}
+    >
+      <g
+        dangerouslySetInnerHTML={{__html: path}}
+        fill={hovered ? 'rgba(0,0,0,0.1)' : 'transparent'}
+        style={{pointerEvents: 'auto', cursor: 'pointer'}}
+        onMouseEnter={(e) => {
+          setHovered(true);
+          onHover(true, e);
+        }}
+        onMouseMove={(e) => onHover(true, e)}
+        onMouseLeave={(e) => {
+          setHovered(false);
+          onHover(false, e);
+        }}
+      />
+    </svg>
   );
 }
 
@@ -86,7 +123,7 @@ type TooltipProps = { text: string; x: number; y: number };
 
 function Tooltip({x, y, text}: TooltipProps) {
   return (
-    <div className="tooltip" style={{left: x + 10, top: y - 30}}>
+    <div className='tooltip' style={{left: x + 10, top: y - 30}}>
       {text}
     </div>
   );
@@ -98,8 +135,7 @@ function Status() {
 }
 
 function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
-  const texts: Record<Id, string> = {};
-  const fragments: Highlight[] = [];
+  const fragments: Fragment[] = [];
 
   const items = annotationPage.items
     ?? orThrow('No annotation items');
@@ -119,7 +155,6 @@ function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
         .filter(isResourceBody)
         .find(isTextualBody)
       ?? orThrow('No text body');
-    texts[id] = textBody.value;
 
     const targets = toArray(a.target);
     const specific = targets
@@ -135,10 +170,9 @@ function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
     if (!svgSelector.value) {
       continue;
     }
-    fragments.push({id, path: svgSelector.value});
+    fragments.push({ id, path: svgSelector.value, text: textBody.value });
   }
-
-  return {texts, fragments};
+  return fragments;
 }
 
 type AnnotationWithBodyAndTarget = Annotation & {

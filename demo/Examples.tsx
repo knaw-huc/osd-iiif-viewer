@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {HighlightOverlayExample} from './HighlightOverlayExample.tsx';
 import {CustomControlsExample} from './CustomControlsExample.tsx';
 import {CanvasNavigationExample} from './CanvasNavigationExample.tsx';
-import {MinimalExample} from "./MinimalExample.tsx";
+import {MinimalExample} from './MinimalExample.tsx';
 
 export function Examples() {
   const [hash, setHash] = useState(window.location.hash);
