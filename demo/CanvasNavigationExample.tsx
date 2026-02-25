@@ -1,5 +1,5 @@
-import {useViewerReady, ViewerCanvas, ViewerProvider} from '../src';
-import {useCanvas} from '../src/manifest/useCanvas.tsx';
+import {useViewerReady, Viewer, ViewerProvider} from '../src';
+import {useCanvas} from '../src';
 import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './navigation.css'
@@ -13,7 +13,7 @@ export function CanvasNavigationExample() {
     <ViewerProvider>
       <ManifestLoader url={manifestUrl} canvas={documentVijf}>
         <div style={{position: 'relative', width: '100vw', height: '100vh'}}>
-          <ViewerCanvas showControls={false}/>
+          <Viewer showControls={false}/>
           <NavigationBar/>
         </div>
       </ManifestLoader>

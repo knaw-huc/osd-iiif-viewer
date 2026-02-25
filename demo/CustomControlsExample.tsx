@@ -1,5 +1,5 @@
 import {type RefObject, useRef} from 'react';
-import {useViewerControls, ViewerCanvas, ViewerProvider} from '../src';
+import {useViewerControls, Viewer, ViewerProvider} from '../src';
 import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './controls.css';
@@ -18,7 +18,7 @@ export function CustomControlsExample() {
           ref={fullscreenRef}
           style={{position: 'relative', width: '100vw', height: '100vh'}}
         >
-          <ViewerCanvas showControls={false}/>
+          <Viewer showControls={false}/>
           <Toolbar fullscreenRef={fullscreenRef}/>
         </div>
       </ManifestLoader>

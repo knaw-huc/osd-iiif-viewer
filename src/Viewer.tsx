@@ -1,4 +1,4 @@
-import {Viewer} from 'openseadragon';
+import {Viewer as OsdViewer} from 'openseadragon';
 import {useEffect, useRef} from 'react';
 import {useViewerStore} from './useViewerStore.tsx';
 import {findTileSource} from './manifest/findTileSource.ts';
@@ -8,7 +8,7 @@ type ViewerCanvasProps = {
   showControls?: boolean;
 };
 
-export function ViewerCanvas(
+export function Viewer(
   {showControls = true}: ViewerCanvasProps
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +21,7 @@ export function ViewerCanvas(
       return;
     }
 
-    const viewer = new Viewer({
+    const viewer = new OsdViewer({
       element: containerRef.current,
       prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
       crossOriginPolicy: 'Anonymous',

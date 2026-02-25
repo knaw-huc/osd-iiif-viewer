@@ -3,7 +3,7 @@ import {
   useCanvas,
   useImageInfo,
   useViewerReady,
-  ViewerCanvas,
+  Viewer,
   ViewerProvider,
 } from '../src';
 import {useEffect, useState} from 'react';
@@ -65,7 +65,7 @@ function HighlightViewer() {
 
   return (
     <div style={{width: '100%', height: '100vh'}}>
-      <ViewerCanvas/>
+      <Viewer/>
       {imageInfo && fragments.map((fragment) => (
         <Overlay key={fragment.id} location={imageInfo.location}>
           <Highlight

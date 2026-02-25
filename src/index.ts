@@ -1,7 +1,7 @@
 export {useImageInfo} from './useImageInfo.tsx';
 
 export {Overlay} from './Overlay.tsx';
-export {ViewerCanvas} from './ViewerCanvas';
+export {Viewer} from './Viewer.tsx';
 export {ViewerProvider} from './ViewerProvider';
 export {useViewer} from './useViewer';
 export {useViewerControls} from './useViewerControls';
@@ -11,7 +11,7 @@ export {useManifest, useLoadManifest} from './manifest/useManifest';
 export {useCanvas} from './manifest/useCanvas';
 export type {
   ViewerManifest,
-  ViewerCanvas as ViewerCanvasModel,
+  ViewerCanvas,
   ViewerRange,
   ViewerMetadata
 } from './manifest/model';
