@@ -6,10 +6,12 @@ export type ControlSlice = {
   zoomMin: number | null;
   zoomMax: number | null;
   isFullPage: boolean;
+  rotation: number;
   setZoomLevel: (zoomLevel: number | null) => void;
   setZoomMin: (zoomMin: number | null) => void;
   setZoomMax: (zoomMax: number | null) => void;
   setIsFullPage: (isFullPage: boolean) => void;
+  setRotation: (rotation: number) => void;
 }
 
 export const createControlSlice: StateCreator<
@@ -22,8 +24,10 @@ export const createControlSlice: StateCreator<
   zoomMin: null,
   zoomMax: null,
   isFullPage: false,
+  rotation: 0,
   setZoomLevel: (zoomLevel) => set({zoomLevel}),
   setZoomMin: (zoomMin) => set({zoomMin}),
   setZoomMax: (zoomMax) => set({zoomMax}),
   setIsFullPage: (isFullPage) => set({isFullPage}),
+  setRotation: (rotation) => set({rotation}),
 });

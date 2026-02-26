@@ -4,7 +4,7 @@ import {useViewer} from './useViewer.tsx';
 import {useViewerStore} from './useViewerStore.tsx';
 
 /**
- * Expose zoom and full-screen controls and state
+ * Expose zoom, rotation and full-screen controls and state
  *
  * Note: Fullscreen is handled via the native Fullscreen API,
  * skipping setFullScreen/setFullPage which moves
@@ -20,6 +20,7 @@ export function useViewerControls(
   const zoomMin = useViewerStoreSelector((s) => s.zoomMin);
   const zoomMax = useViewerStoreSelector((s) => s.zoomMax);
   const isFullPage = useViewerStoreSelector((s) => s.isFullPage);
+  const rotation = useViewerStoreSelector((s) => s.rotation);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -44,6 +45,14 @@ export function useViewerControls(
     viewer?.viewport.goHome();
   }, [viewer]);
 
+  const rotateRight = useCallback(() => {
+    if (!viewer) {
+      return;
+    }
+    const rotationUpdate = viewer.viewport.getRotation() + 90;
+    viewer.viewport.setRotation(rotationUpdate);
+  }, [viewer]);
+
   const toggleFullPage = useCallback(() => {
     const container = fullscreenRef?.current;
     if (!container) {
@@ -60,10 +69,12 @@ export function useViewerControls(
     zoomIn,
     zoomOut,
     home,
+    rotateRight,
     toggleFullPage,
     zoomLevel,
     zoomMin,
     zoomMax,
-    isFullPage
+    isFullPage,
+    rotation,
   };
 }

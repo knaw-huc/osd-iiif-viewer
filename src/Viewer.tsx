@@ -38,18 +38,25 @@ export function Viewer(
       state.setZoomLevel(viewer.viewport.getZoom());
       state.setZoomMin(viewer.viewport.getMinZoom());
       state.setZoomMax(viewer.viewport.getMaxZoom());
+      state.setRotation(viewer.viewport.getRotation());
     });
 
     const onZoom = () => {
       store.getState().setZoomLevel(viewer.viewport.getZoom());
     };
 
+    const onRotate = () => {
+      store.getState().setRotation(viewer.viewport.getRotation());
+    };
+
     viewer.addHandler('animation-start', onZoom);
     viewer.addHandler('animation-finish', onZoom);
+    viewer.addHandler('rotate', onRotate);
 
     return () => {
       viewer.removeHandler('animation-start', onZoom);
       viewer.removeHandler('animation-finish', onZoom);
+      viewer.removeHandler('rotate', onRotate);
       viewer.destroy();
       const state = store.getState();
       state.setViewer(null);
@@ -58,6 +65,7 @@ export function Viewer(
       state.setZoomMin(null);
       state.setZoomMax(null);
       state.setIsFullPage(false);
+      state.setRotation(0);
     };
   }, [tileSource, showControls, store]);
 
