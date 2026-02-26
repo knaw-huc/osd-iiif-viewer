@@ -12,19 +12,19 @@ Current features (WIP):
 ```tsx
 import {useEffect} from 'react';
 import {
+  Viewer,
   ViewerProvider,
-  ViewerCanvas,
   useLoadManifest,
   useManifest,
 } from '@knaw-huc/osd-iiif-viewer';
 
 export function Example() {
   return <ViewerProvider>
-    <Viewer/>
+    <View/>
   </ViewerProvider>
 }
 
-function Viewer() {
+function View() {
   const loadManifest = useLoadManifest();
   const manifest = useManifest();
 
@@ -38,7 +38,7 @@ function Viewer() {
 
   return (
     <div style={{width: '100%', height: '100vh'}}>
-      <ViewerCanvas/>
+      <Viewerer/>
     </div>
   );
 }

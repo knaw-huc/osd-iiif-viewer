@@ -4,12 +4,12 @@ import {useViewerStore} from './useViewerStore.tsx';
 import {findTileSource} from './manifest/findTileSource.ts';
 import {useCanvas} from './manifest/useCanvas.tsx';
 
-type ViewerCanvasProps = {
+type ViewerProps = {
   showControls?: boolean;
 };
 
 export function Viewer(
-  {showControls = true}: ViewerCanvasProps
+  {showControls = true}: ViewerProps
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();

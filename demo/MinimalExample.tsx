@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {
+  Viewer,
   ViewerProvider,
-  ViewerCanvas,
   useLoadManifest,
   useManifest,
 } from '@knaw-huc/osd-iiif-viewer';
@@ -11,11 +11,11 @@ const manifestUrl = 'https://globalise-huygens.github.io/' +
 
 export function MinimalExample() {
   return <ViewerProvider>
-    <Viewer/>
+    <View/>
   </ViewerProvider>
 }
 
-function Viewer() {
+function View() {
   const loadManifest = useLoadManifest();
   const manifest = useManifest();
 
@@ -29,7 +29,7 @@ function Viewer() {
 
   return (
     <div style={{width: '100%', height: '100vh'}}>
-      <ViewerCanvas/>
+      <Viewer/>
     </div>
   );
 }
