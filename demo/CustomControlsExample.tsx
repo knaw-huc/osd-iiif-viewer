@@ -32,7 +32,7 @@ function Toolbar({fullscreenRef}: ToolbarProps) {
   const {
     zoomIn,
     zoomOut,
-    rotateRight,
+    rotate,
     toggleFullPage,
     isFullPage,
   } = useViewerControls(fullscreenRef);
@@ -41,7 +41,7 @@ function Toolbar({fullscreenRef}: ToolbarProps) {
     <div className="controls">
       <button onClick={zoomIn}>zoom in</button>
       <button onClick={zoomOut}>zoom out</button>
-      <button onClick={rotateRight}>rotate right</button>
+      <button onClick={() => rotate(90)}>rotate right</button>
       <button onClick={toggleFullPage}>
         {isFullPage ? 'exit fullscreen' : 'fullscreen'}
       </button>

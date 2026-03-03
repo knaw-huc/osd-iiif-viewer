@@ -45,11 +45,11 @@ export function useViewerControls(
     viewer?.viewport.goHome();
   }, [viewer]);
 
-  const rotateRight = useCallback(() => {
+  const rotate = useCallback((degrees: number) => {
     if (!viewer) {
       return;
     }
-    const rotationUpdate = viewer.viewport.getRotation() + 90;
+    const rotationUpdate = viewer.viewport.getRotation() + degrees;
     viewer.viewport.setRotation(rotationUpdate);
   }, [viewer]);
 
@@ -69,7 +69,7 @@ export function useViewerControls(
     zoomIn,
     zoomOut,
     home,
-    rotateRight,
+    rotate,
     toggleFullPage,
     zoomLevel,
     zoomMin,
