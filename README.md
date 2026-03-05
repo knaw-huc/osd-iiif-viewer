@@ -1,14 +1,14 @@
 # @knaw-huc/osd-iiif-viewer
 
-React wrapper around OpenSeadragon to display and browse image sources from iiif manifests.
+React wrapper around OpenSeadragon to display and browse image sources from IIIF manifests.
 
-Current features (WIP):
+Features:
 - Canvas navigation
 - Highlight overlay
 - Zoom and fullscreen controls
-- Manifest parsing (iiif manifests v3, ImageService2)
+- IIIF manifest loading
 
-## Minimal example
+## Example
 ```tsx
 import { useEffect } from 'react';
 import {
@@ -26,13 +26,13 @@ export function Example() {
 
 function View() {
   const loadManifest = useLoadManifest();
-  const manifest = useManifest();
+  const { isReady } = useManifest();
 
   useEffect(() => {
     loadManifest('/manifest.json');
   }, [loadManifest]);
 
-  if (manifest.isLoading || manifest.error) {
+  if (!isReady) {
     return null;
   }
 
@@ -44,3 +44,4 @@ function View() {
 }
 ```
 
+For more examples, run `npm i && npm start` and open http://localhost:5173
