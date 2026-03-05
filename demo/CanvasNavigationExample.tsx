@@ -1,5 +1,10 @@
-import {useViewerReady, Viewer, ViewerProvider} from '../src';
-import {useCanvas} from '../src';
+import {
+  useCanvas,
+  useViewerReady,
+  Viewer,
+  ViewerProvider
+} from '@knaw-huc/osd-iiif-viewer';
+import {getValue} from '@iiif/helpers/i18n';
 import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './navigation.css'
@@ -36,7 +41,7 @@ function NavigationBar() {
   return (
     <div className="navigation">
       <span className="info">
-        {ready ? current?.label : 'loading...'}
+        {current ? getValue(current.label) : 'loading...'}
         &nbsp;
         ({currentIndex + 1}/{total})
       </span>

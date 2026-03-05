@@ -10,7 +10,7 @@ Current features (WIP):
 
 ## Minimal example
 ```tsx
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import {
   Viewer,
   ViewerProvider,
@@ -32,13 +32,13 @@ function View() {
     loadManifest('/manifest.json');
   }, [loadManifest]);
 
-  if (!manifest.data) {
+  if (manifest.isLoading || manifest.error) {
     return null;
   }
 
   return (
-    <div style={{width: '100%', height: '100vh'}}>
-      <Viewerer/>
+    <div style={{ width: '100%', height: '100vh' }}>
+      <Viewer/>
     </div>
   );
 }

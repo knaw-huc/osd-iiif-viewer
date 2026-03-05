@@ -5,23 +5,19 @@ import {
   useViewerReady,
   Viewer,
   ViewerProvider,
-} from '../src';
+} from '@knaw-huc/osd-iiif-viewer';
 import {useEffect, useState} from 'react';
 import type {
   Annotation,
   AnnotationPage,
-  AnnotationTarget,
-  Body,
-  Selector,
-  SpecificResource,
-  Target,
+  AnnotationTarget, Selector, SpecificResource, Target,Body
 } from '@iiif/presentation-3';
 import {orThrow} from '../src/util/orThrow';
-import type {Id} from '../src/Id';
 import {fetchJson, isResourceBody, toArray} from './utils';
 import {ManifestLoader} from './ManifestLoader';
 
 import './tooltip.css';
+import {getAnnotationPageIds} from "../src";
 
 const manifestUrl =
   'https://globalise-huygens.github.io/' +
@@ -39,7 +35,7 @@ export function HighlightOverlayExample() {
 }
 
 type Fragment = {
-  id: Id;
+  id: string;
   text: string;
   path: string;
 };
@@ -51,13 +47,16 @@ function HighlightViewer() {
   const [tooltip, setTooltip] = useState<TooltipProps | null>(null);
 
   useEffect(() => {
-    if (!current?.annotationPageIds.length) {
+    if(!current) {
+      return;
+    }
+    const pageIds = getAnnotationPageIds(current);
+    if (!pageIds.length) {
       return;
     }
 
-    load(current.annotationPageIds[0]);
-
-    async function load(url: string) {
+    loadPage(pageIds[0]);
+    async function loadPage(url: string) {
       const annotationPage = await fetchJson<AnnotationPage>(url);
       setFragments(getFragmentsFromAnnotationPage(annotationPage));
     }
@@ -73,7 +72,7 @@ function HighlightViewer() {
             size={imageInfo.size}
             onHover={(hovering, e) => {
               if (!hovering) {
-                setTooltip(null)
+                setTooltip(null);
                 return;
               }
               setTooltip({text: fragment.text, x: e.clientX, y: e.clientY});
@@ -170,7 +169,7 @@ function getFragmentsFromAnnotationPage(annotationPage: AnnotationPage) {
     if (!svgSelector.value) {
       continue;
     }
-    fragments.push({ id, path: svgSelector.value, text: textBody.value });
+    fragments.push({id, path: svgSelector.value, text: textBody.value});
   }
   return fragments;
 }

@@ -13,29 +13,32 @@ export type CanvasSlice = {
 }
 
 export const createCanvasSlice: StateCreator<
-ViewerStore,
+  ViewerStore,
   [],
   [],
   CanvasSlice
-  > = (set, get) => ({
-    canvas: {
-      currentIndex: 0,
-    },
+> = (set, get) => ({
+  canvas: {
+    currentIndex: 0,
+  },
 
-    goToCanvas: (index) => {
-      const canvases = get().manifest.data?.canvases;
-      if (!canvases?.length) { return; }
-      const clamped = Math.max(0, Math.min(index, canvases.length - 1));
-      set({canvas: {currentIndex: clamped}});
-    },
+  goToCanvas: (index) => {
+    const {vault, url} = get().manifest;
+    if (!url) {
+      return;
+    }
+    const manifest = vault.get({id: url, type: 'Manifest'});
+    const clamped = Math.max(0, Math.min(index, manifest.items.length - 1));
+    set({canvas: {currentIndex: clamped}});
+  },
 
-    nextCanvas: () => {
-      const {canvas, goToCanvas} = get();
-      goToCanvas(canvas.currentIndex + 1);
-    },
+  nextCanvas: () => {
+    const {canvas, goToCanvas} = get();
+    goToCanvas(canvas.currentIndex + 1);
+  },
 
-    prevCanvas: () => {
-      const {canvas, goToCanvas} = get();
-      goToCanvas(canvas.currentIndex - 1);
-    },
-  });
+  prevCanvas: () => {
+    const {canvas, goToCanvas} = get();
+    goToCanvas(canvas.currentIndex - 1);
+  },
+});

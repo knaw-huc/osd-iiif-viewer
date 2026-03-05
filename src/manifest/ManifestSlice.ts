@@ -1,48 +1,36 @@
-import type {StateCreator} from 'zustand/vanilla';
-import type {ViewerManifest} from './model.ts';
-import {parseManifest} from './parseManifest.ts';
-import type {ViewerStore} from '../ViewerStore.ts';
+import type { StateCreator } from 'zustand/vanilla';
+import type { Vault } from '@iiif/helpers/vault';
+import type { ViewerStore } from '../ViewerStore.ts';
 
 export type ManifestState = {
-  isLoading: boolean;
-  data: ViewerManifest | null;
   url: string | null;
+  vault: Vault;
+  isLoading: boolean;
   error: string | null;
 };
 
 export type ManifestSlice = {
   manifest: ManifestState;
   loadManifest: (url: string) => Promise<void>;
-}
+};
 
-const defaultManifest = {data: null, url: '', isLoading: false, error: null};
+const defaultState = { url: null, isLoading: false, error: null };
 
-export const createManifestSlice: StateCreator<
-  ViewerStore,
-  [],
-  [],
-  ManifestSlice
-> = (set) => ({
-  manifest: {...defaultManifest},
+export const createManifestSlice = (
+  vault: Vault
+): StateCreator<ViewerStore, [], [], ManifestSlice> => (set, get) => ({
+  manifest: { ...defaultState, vault },
 
   loadManifest: async (url) => {
-    const loading = {...defaultManifest, url, loading: true};
-    set({manifest: loading});
+    const { vault } = get().manifest;
+    set({ manifest: { vault, url, isLoading: true, error: null } });
 
-    const done = {...loading, loading: false};
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        const error = `Failed to fetch manifest: ${response.status}`;
-        set({manifest: {...done, error}});
-        return;
-      }
-      const json = await response.json();
-      const data = parseManifest(json);
-      set({manifest: {...done, data}});
+      await vault.loadManifest(url);
+      set({ manifest: { vault, url, isLoading: false, error: null } });
     } catch (e) {
       const error = e instanceof Error ? e.message : 'Unknown error';
-      set({manifest: {...done, error}});
+      set({ manifest: { vault, url, isLoading: false, error } });
     }
-  }
+  },
 });

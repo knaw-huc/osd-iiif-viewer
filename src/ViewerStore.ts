@@ -1,11 +1,12 @@
-import {createStore} from 'zustand/vanilla';
-import {createInstanceSlice, type InstanceSlice} from './InstanceSlice.ts';
-import {createControlSlice, type ControlSlice} from './ControlSlice.ts';
+import { createStore } from 'zustand/vanilla';
+import { Vault } from '@iiif/helpers/vault';
+import { createInstanceSlice, type InstanceSlice } from './InstanceSlice.ts';
+import { createControlSlice, type ControlSlice } from './ControlSlice.ts';
 import {
   createManifestSlice,
-  type ManifestSlice
+  type ManifestSlice,
 } from './manifest/ManifestSlice.ts';
-import {type CanvasSlice, createCanvasSlice} from './manifest/CanvasSlice.ts';
+import { type CanvasSlice, createCanvasSlice } from './manifest/CanvasSlice.ts';
 
 export type ViewerStore =
   & InstanceSlice
@@ -13,9 +14,12 @@ export type ViewerStore =
   & ManifestSlice
   & CanvasSlice;
 
-export const createViewerStore = () => createStore<ViewerStore>((...a) => ({
-  ...createInstanceSlice(...a),
-  ...createControlSlice(...a),
-  ...createManifestSlice(...a),
-  ...createCanvasSlice(...a),
-}));
+export const createViewerStore = () => {
+  const vault = new Vault();
+  return createStore<ViewerStore>((...a) => ({
+    ...createInstanceSlice(...a),
+    ...createControlSlice(...a),
+    ...createManifestSlice(vault)(...a),
+    ...createCanvasSlice(...a),
+  }));
+};

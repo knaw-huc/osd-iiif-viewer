@@ -1,15 +1,14 @@
 import {
   useLoadManifest,
+  useCanvas,
   useManifest
-} from '../src/manifest/useManifest.tsx';
-import {useCanvas} from '../src/manifest/useCanvas.tsx';
+} from '@knaw-huc/osd-iiif-viewer';
 import {useEffect} from 'react';
 
-
 type ManifestLoaderProps = {
-  children: React.ReactNode,
-  url: string,
-  canvas: number
+  children: React.ReactNode;
+  url: string;
+  canvas: number;
 };
 
 export function ManifestLoader(
@@ -17,25 +16,25 @@ export function ManifestLoader(
 ) {
   const loadManifest = useLoadManifest();
   const {goTo} = useCanvas();
-  const manifest = useManifest();
+  const {isLoading, isReady, error} = useManifest();
 
   useEffect(() => {
     loadManifest(url);
   }, [loadManifest, url]);
 
   useEffect(() => {
-    if (manifest.data) {
+    if (isReady) {
       goTo(canvas);
     }
-  }, [manifest.data, goTo, canvas]);
+  }, [isReady, goTo, canvas]);
 
-  if (manifest.isLoading) {
-    return <>Loading manifest</>;
+  if (isLoading) {
+    return <>Loading manifest...</>;
   }
-  if (manifest.error) {
-    return <>Error: {manifest.error}</>;
+  if (error) {
+    return <>Error: {error}</>;
   }
-  if (!manifest.data) {
+  if (!isReady) {
     return null;
   }
 

@@ -1,5 +1,9 @@
 import {type RefObject, useRef} from 'react';
-import {useViewerControls, Viewer, ViewerProvider} from '../src';
+import {
+  useViewerControls,
+  Viewer,
+  ViewerProvider
+} from '@knaw-huc/osd-iiif-viewer';
 import {ManifestLoader} from './ManifestLoader.tsx';
 
 import './controls.css';

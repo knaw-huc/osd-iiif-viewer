@@ -1,20 +1,22 @@
-import {Viewer as OsdViewer} from 'openseadragon';
-import {useEffect, useRef} from 'react';
-import {useViewerStore} from './useViewerStore.tsx';
-import {findTileSource} from './manifest/findTileSource.ts';
-import {useCanvas} from './manifest/useCanvas.tsx';
+import { Viewer as OsdViewer } from 'openseadragon';
+import { useEffect, useRef } from 'react';
+import { useViewerStore } from './useViewerStore.tsx';
+import { findTileSource } from './manifest/findTileSource.ts';
+import { useCanvas } from './manifest/useCanvas.tsx';
+import {useVault} from './manifest/useVault.tsx';
 
 type ViewerProps = {
   showControls?: boolean;
 };
 
 export function Viewer(
-  {showControls = true}: ViewerProps
+  { showControls = true }: ViewerProps
 ) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
-  const {current} = useCanvas();
-  const tileSource = current ? findTileSource(current) : null;
+  const vault = useVault();
+  const { current } = useCanvas();
+  const tileSource = current ? findTileSource(vault, current) : null;
 
   useEffect(() => {
     if (!containerRef.current || !tileSource) {

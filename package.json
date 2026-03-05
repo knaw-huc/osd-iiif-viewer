@@ -28,6 +28,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@iiif/helpers": "^1.5.8",
     "openseadragon": "^5.0.1",
     "zustand": "^5.0.9"
   },
