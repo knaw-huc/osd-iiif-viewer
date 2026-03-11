@@ -3,19 +3,19 @@ import {
   Viewer,
   ViewerProvider,
   useLoadManifest,
+  useManifest
 } from '@knaw-huc/osd-iiif-viewer';
-import {useManifest} from "../src";
 
 const manifestUrl = 'https://globalise-huygens.github.io/' +
   'document-view-sandbox/iiif/manifest.json';
 
 export function MinimalExample() {
   return <ViewerProvider>
-    <View/>
+    <MyOsdIiifView/>
   </ViewerProvider>;
 }
 
-function View() {
+function MyOsdIiifView() {
   const loadManifest = useLoadManifest();
   const {isReady} = useManifest()
 

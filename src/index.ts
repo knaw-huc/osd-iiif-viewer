@@ -14,4 +14,3 @@ export { useVault } from './manifest/useVault';
 export { findTileSource } from './manifest/findTileSource';
 export { findThumbnail } from './manifest/findThumbnail';
 export { getImageServiceId } from './manifest/getImageServiceId';
-export {getAnnotationPageIds} from './manifest/getAnnotationPageIds.ts';

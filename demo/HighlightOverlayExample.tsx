@@ -17,7 +17,7 @@ import {fetchJson, isResourceBody, toArray} from './utils';
 import {ManifestLoader} from './ManifestLoader';
 
 import './tooltip.css';
-import {getAnnotationPageIds} from "../src";
+import {getAnnotationPageIds} from './getAnnotationPageIds.ts';
 
 const manifestUrl =
   'https://globalise-huygens.github.io/' +
