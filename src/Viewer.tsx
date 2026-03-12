@@ -1,40 +1,36 @@
-import { Viewer as OsdViewer } from 'openseadragon';
-import { useEffect, useRef } from 'react';
-import { useViewerStore } from './useViewerStore.tsx';
-import { findTileSource } from './manifest/findTileSource.ts';
-import { useCanvas } from './manifest/useCanvas.tsx';
+import {Viewer as OsdViewer} from 'openseadragon';
+import {useEffect, useRef} from 'react';
+import {useViewerStore} from './useViewerStore.tsx';
+import {findTileSource} from './manifest/findTileSource.ts';
+import {useCanvas} from './manifest/useCanvas.tsx';
 import {useVault} from './manifest/useVault.tsx';
 
 type ViewerProps = {
   showControls?: boolean;
 };
 
-export function Viewer(
-  { showControls = true }: ViewerProps
-) {
+export function Viewer({showControls = true}: ViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
   const vault = useVault();
-  const { current } = useCanvas();
+  const {current} = useCanvas();
   const tileSource = current ? findTileSource(vault, current) : null;
 
   useEffect(() => {
-    if (!containerRef.current || !tileSource) {
+    if (!containerRef.current) {
       return;
     }
-
     const viewer = new OsdViewer({
       element: containerRef.current,
       prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
       crossOriginPolicy: 'Anonymous',
-      tileSources: tileSource,
       showNavigationControl: showControls,
     });
 
     const state = store.getState();
     state.setViewer(viewer);
 
-    viewer.addOnceHandler('open', () => {
+    viewer.addHandler('open', () => {
       const state = store.getState();
       state.setViewerReady(true);
       state.setZoomLevel(viewer.viewport.getZoom());
@@ -69,7 +65,15 @@ export function Viewer(
       state.setIsFullPage(false);
       state.setRotation(0);
     };
-  }, [tileSource, showControls, store]);
+  }, [showControls, store]);
+
+  useEffect(() => {
+    const viewer = store.getState().viewer;
+    if (!viewer || !tileSource) {
+      return;
+    }
+    viewer.open(tileSource);
+  }, [tileSource, store]);
 
   return <div
     id="viewer"
