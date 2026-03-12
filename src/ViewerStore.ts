@@ -14,7 +14,8 @@ export type ViewerStore =
   & ControlSlice
   & ManifestSlice
   & CanvasSlice
-  & Resettable;
+  & Resettable
+  & { resetViewer: () => void };
 
 export const createViewerStore = () => {
   const vault = new Vault();
@@ -25,11 +26,20 @@ export const createViewerStore = () => {
     return slice;
   };
 
-  return createStore<ViewerStore>((...a) => ({
-    ...withReset(createInstanceSlice(...a)),
-    ...withReset(createControlSlice(...a)),
-    ...withReset(createManifestSlice(vault)(...a)),
-    ...withReset(createCanvasSlice(...a)),
-    reset: () => resets.forEach((fn) => fn()),
-  }));
+  return createStore<ViewerStore>((...a) => {
+    const instance = withReset(createInstanceSlice(...a));
+    const control = withReset(createControlSlice(...a));
+
+    return {
+      ...instance,
+      ...control,
+      ...withReset(createManifestSlice(vault)(...a)),
+      ...withReset(createCanvasSlice(...a)),
+      reset: () => resets.forEach((fn) => fn()),
+      resetViewer: () => {
+        instance.reset();
+        control.reset();
+      },
+    };
+  });
 };

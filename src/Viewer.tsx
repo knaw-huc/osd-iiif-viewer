@@ -3,7 +3,7 @@ import {useEffect, useRef} from 'react';
 import {useViewerStore} from './useViewerStore.tsx';
 import {findTileSource} from './manifest/findTileSource.ts';
 import {useCanvas} from './manifest/useCanvas.tsx';
-import {useVault} from './manifest/useVault.tsx';
+import {useManifest} from './manifest/useManifest.tsx';
 
 type ViewerProps = {
   showControls?: boolean;
@@ -12,7 +12,7 @@ type ViewerProps = {
 export function Viewer({showControls = true}: ViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
-  const vault = useVault();
+  const {vault} = useManifest();
   const {current} = useCanvas();
   const tileSource = current ? findTileSource(vault, current) : null;
 
@@ -53,7 +53,7 @@ export function Viewer({showControls = true}: ViewerProps) {
 
     return () => {
       viewer.destroy();
-      store.getState().reset();
+      store.getState().resetViewer();
     };
   }, [showControls, store]);
 
