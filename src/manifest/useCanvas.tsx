@@ -4,8 +4,10 @@ import { useViewerStoreSelector } from '../useViewerStoreSelector.tsx';
 import {orThrow} from '../util/orThrow.ts';
 
 export function useCanvas() {
-  const { vault, url, isLoading } = useViewerStoreSelector((s) => s.manifest);
-  const currentIndex = useViewerStoreSelector((s) => s.canvas.currentIndex);
+  const vault = useViewerStoreSelector((s) => s.vault);
+  const url = useViewerStoreSelector((s) => s.url);
+  const isLoading = useViewerStoreSelector((s) => s.isLoading);
+  const currentIndex = useViewerStoreSelector((s) => s.currentIndex);
   const goTo = useViewerStoreSelector((s) => s.goToCanvas);
   const next = useViewerStoreSelector((s) => s.nextCanvas);
   const prev = useViewerStoreSelector((s) => s.prevCanvas);

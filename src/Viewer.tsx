@@ -52,18 +52,8 @@ export function Viewer({showControls = true}: ViewerProps) {
     viewer.addHandler('rotate', onRotate);
 
     return () => {
-      viewer.removeHandler('animation-start', onZoom);
-      viewer.removeHandler('animation-finish', onZoom);
-      viewer.removeHandler('rotate', onRotate);
       viewer.destroy();
-      const state = store.getState();
-      state.setViewer(null);
-      state.setViewerReady(false);
-      state.setZoomLevel(null);
-      state.setZoomMin(null);
-      state.setZoomMax(null);
-      state.setIsFullPage(false);
-      state.setRotation(0);
+      store.getState().reset();
     };
   }, [showControls, store]);
 

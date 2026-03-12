@@ -1,36 +1,42 @@
 import type { StateCreator } from 'zustand/vanilla';
 import type { Vault } from '@iiif/helpers/vault';
 import type { ViewerStore } from '../ViewerStore.ts';
+import type { Resettable } from '../Resettable.ts';
 
 export type ManifestState = {
   url: string | null;
-  vault: Vault;
   isLoading: boolean;
   error: string | null;
 };
 
-export type ManifestSlice = {
-  manifest: ManifestState;
+export type ManifestSlice = Resettable & ManifestState & {
+  vault: Vault;
   loadManifest: (url: string) => Promise<void>;
 };
 
-const defaultState = { url: null, isLoading: false, error: null };
+const defaultManifest: ManifestState = {
+  url: null,
+  isLoading: false,
+  error: null,
+};
 
 export const createManifestSlice = (
   vault: Vault
-): StateCreator<ViewerStore, [], [], ManifestSlice> => (set, get) => ({
-  manifest: { ...defaultState, vault },
+): StateCreator<ViewerStore, [], [], ManifestSlice> => (set) => ({
+  vault,
+  ...defaultManifest,
 
   loadManifest: async (url) => {
-    const { vault } = get().manifest;
-    set({ manifest: { vault, url, isLoading: true, error: null } });
+    set({ url, isLoading: true, error: null });
 
     try {
       await vault.loadManifest(url);
-      set({ manifest: { vault, url, isLoading: false, error: null } });
+      set({ isLoading: false, error: null });
     } catch (e) {
       const error = e instanceof Error ? e.message : 'Unknown error';
-      set({ manifest: { vault, url, isLoading: false, error } });
+      set({ isLoading: false, error });
     }
   },
+
+  reset: () => set(defaultManifest),
 });

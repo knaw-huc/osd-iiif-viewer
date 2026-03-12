@@ -1,9 +1,11 @@
 import { useViewerStoreSelector } from '../useViewerStoreSelector.tsx';
 
 export function useManifest() {
-  const manifest = useViewerStoreSelector((s) => s.manifest);
-  const isReady = !!manifest.url && !manifest.isLoading && !manifest.error;
-  return { ...manifest, isReady };
+  const url = useViewerStoreSelector((s) => s.url);
+  const isLoading = useViewerStoreSelector((s) => s.isLoading);
+  const error = useViewerStoreSelector((s) => s.error);
+  const isReady = !!url && !isLoading && !error;
+  return { url, isLoading, error, isReady };
 }
 
 export function useLoadManifest() {

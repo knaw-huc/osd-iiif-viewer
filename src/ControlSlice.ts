@@ -1,18 +1,30 @@
 import type {StateCreator} from 'zustand/vanilla';
 import type {ViewerStore} from './ViewerStore.ts';
+import type {Resettable} from './Resettable.ts';
 
-export type ControlSlice = {
+export type ControlState = {
   zoomLevel: number | null;
   zoomMin: number | null;
   zoomMax: number | null;
   isFullPage: boolean;
   rotation: number;
+}
+
+export type ControlSlice = Resettable & ControlState & {
   setZoomLevel: (zoomLevel: number | null) => void;
   setZoomMin: (zoomMin: number | null) => void;
   setZoomMax: (zoomMax: number | null) => void;
   setIsFullPage: (isFullPage: boolean) => void;
   setRotation: (rotation: number) => void;
-}
+};
+
+const defaultState: ControlState = {
+  zoomLevel: null,
+  zoomMin: null,
+  zoomMax: null,
+  isFullPage: false,
+  rotation: 0,
+};
 
 export const createControlSlice: StateCreator<
   ViewerStore,
@@ -20,14 +32,11 @@ export const createControlSlice: StateCreator<
   [],
   ControlSlice
 > = (set) => ({
-  zoomLevel: null,
-  zoomMin: null,
-  zoomMax: null,
-  isFullPage: false,
-  rotation: 0,
+  ...defaultState,
   setZoomLevel: (zoomLevel) => set({zoomLevel}),
   setZoomMin: (zoomMin) => set({zoomMin}),
   setZoomMax: (zoomMax) => set({zoomMax}),
   setIsFullPage: (isFullPage) => set({isFullPage}),
   setRotation: (rotation) => set({rotation}),
+  reset: () => set(defaultState),
 });

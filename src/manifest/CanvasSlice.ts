@@ -1,16 +1,20 @@
 import type {StateCreator} from 'zustand/vanilla';
 import type {ViewerStore} from '../ViewerStore.ts';
+import type {Resettable} from "../Resettable.ts";
 
 export type CanvasState = {
   currentIndex: number;
 };
 
-export type CanvasSlice = {
-  canvas: CanvasState;
+export type CanvasSlice = Resettable & CanvasState & {
   goToCanvas: (index: number) => void;
   nextCanvas: () => void;
   prevCanvas: () => void;
-}
+};
+
+const defaultCanvas = {
+  currentIndex: 0,
+} satisfies Partial<CanvasSlice>;
 
 export const createCanvasSlice: StateCreator<
   ViewerStore,
@@ -18,27 +22,27 @@ export const createCanvasSlice: StateCreator<
   [],
   CanvasSlice
 > = (set, get) => ({
-  canvas: {
-    currentIndex: 0,
-  },
+  ...defaultCanvas,
 
   goToCanvas: (index) => {
-    const {vault, url} = get().manifest;
+    const {vault, url} = get();
     if (!url) {
       return;
     }
     const manifest = vault.get({id: url, type: 'Manifest'});
     const clamped = Math.max(0, Math.min(index, manifest.items.length - 1));
-    set({canvas: {currentIndex: clamped}});
+    set({currentIndex: clamped});
   },
 
   nextCanvas: () => {
-    const {canvas, goToCanvas} = get();
-    goToCanvas(canvas.currentIndex + 1);
+    const {currentIndex, goToCanvas} = get();
+    goToCanvas(currentIndex + 1);
   },
 
   prevCanvas: () => {
-    const {canvas, goToCanvas} = get();
-    goToCanvas(canvas.currentIndex - 1);
+    const {currentIndex, goToCanvas} = get();
+    goToCanvas(currentIndex - 1);
   },
+
+  reset: () => set(defaultCanvas),
 });
