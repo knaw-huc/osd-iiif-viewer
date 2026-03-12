@@ -58,10 +58,12 @@ export function Viewer({showControls = true}: ViewerProps) {
   }, [showControls, store]);
 
   useEffect(() => {
-    const viewer = store.getState().viewer;
+    const state = store.getState();
+    const viewer = state.viewer;
     if (!viewer || !tileSource) {
       return;
     }
+    state.setViewerReady(false);
     viewer.open(tileSource);
   }, [tileSource, store]);
 
