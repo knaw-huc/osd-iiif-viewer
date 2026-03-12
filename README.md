@@ -5,8 +5,8 @@ Lightweight React wrapper around OpenSeadragon to display and browse image sourc
 Features:
 - Canvas navigation
 - Highlight overlay
-- Zoom and fullscreen controls
-- IIIF manifest loading
+- Zoom, rotate and fullscreen controls
+- Manifest loading and parsing with @iiif/helpers Vault
 
 ## Example
 
