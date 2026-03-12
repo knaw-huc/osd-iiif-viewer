@@ -1,6 +1,6 @@
 {
   "name": "@knaw-huc/osd-iiif-viewer",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "repository": {
     "type": "git",
     "url": "https://github.com/knaw-huc/osd-iiif-viewer.git"
