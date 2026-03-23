@@ -23,7 +23,9 @@ export function Overlay({ location, children }: OverlayProps) {
     }
     viewer.addOverlay({ element: container, location });
     return () => {
-      viewer.removeOverlay(container);
+      if (viewer.isOpen()) {
+        viewer.removeOverlay(container);
+      }
     };
   }, [viewer, location, container]);
 
