@@ -77,6 +77,7 @@ function HighlightViewer() {
               }
               setTooltip({text: fragment.text, x: e.clientX, y: e.clientY});
             }}
+            onClick={() => alert(`Clicked: ${fragment.id}`)}
           />
         </Overlay>
       ))}
@@ -90,9 +91,12 @@ type HighlightProps = {
   path: string;
   size: OpenSeadragon.Point;
   onHover: (hovering: boolean, event: React.MouseEvent) => void;
+  onClick: (event: React.MouseEvent) => void;
 };
 
-function Highlight({path, size, onHover}: HighlightProps) {
+function Highlight(
+  {path, size, onHover, onClick}: HighlightProps
+) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -113,6 +117,7 @@ function Highlight({path, size, onHover}: HighlightProps) {
           setHovered(false);
           onHover(false, e);
         }}
+        onClick={onClick}
       />
     </svg>
   );
