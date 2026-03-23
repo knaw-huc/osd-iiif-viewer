@@ -64,7 +64,9 @@ function HighlightViewer() {
 
   return (
     <div style={{width: '100%', height: '100vh'}}>
-      <Viewer/>
+      <Viewer options={{
+        showNavigationControl: false,
+      }}/>
       {imageInfo && fragments.map((fragment) => (
         <Overlay key={fragment.id} location={imageInfo.location}>
           <Highlight

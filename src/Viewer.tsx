@@ -1,15 +1,22 @@
-import {Viewer as OsdViewer} from 'openseadragon';
+import {type Options as OsdOptions, Viewer as OsdViewer} from 'openseadragon';
 import {type RefObject, useEffect, useRef, useState} from 'react';
 import {useViewerStore} from './useViewerStore.tsx';
 import {findTileSource} from './manifest/findTileSource.ts';
 import {useCanvas} from './manifest/useCanvas.tsx';
 import {useManifest} from './manifest/useManifest.tsx';
+import {useStableProp} from './useStableProp.tsx';
 
 type ViewerProps = {
-  showControls?: boolean;
+  options?: Partial<OsdOptions>;
 };
 
-export function Viewer({showControls = true}: ViewerProps) {
+const defaultOptions: Partial<OsdOptions> = {
+  prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+  crossOriginPolicy: 'Anonymous',
+  showNavigationControl: true,
+};
+
+export function Viewer(props: ViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const store = useViewerStore();
   const {vault} = useManifest();
@@ -17,17 +24,17 @@ export function Viewer({showControls = true}: ViewerProps) {
   const tileSource = current ? findTileSource(vault, current) : null;
   const size = useContainerSize(containerRef);
   const isContainerReady = size.width > 0 && size.height > 0;
+  const options = useStableProp(props.options)
 
-  useEffect(createOsdViewer, [isContainerReady, showControls, store]);
+  useEffect(createOsdViewer, [isContainerReady, store, options]);
   function createOsdViewer() {
     if (!containerRef.current || !isContainerReady) {
       return;
     }
     const viewer = new OsdViewer({
+      ...defaultOptions,
+      ...options,
       element: containerRef.current,
-      prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
-      crossOriginPolicy: 'Anonymous',
-      showNavigationControl: showControls,
     });
 
     const state = store.getState();

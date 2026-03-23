@@ -18,7 +18,7 @@ export function CanvasNavigationExample() {
     <ViewerProvider>
       <ManifestLoader url={manifestUrl} canvas={documentVijf}>
         <div style={{position: 'relative', width: '100vw', height: '100vh'}}>
-          <Viewer showControls={false}/>
+          <Viewer options={{showNavigationControl: false}}/>
           <NavigationBar/>
         </div>
       </ManifestLoader>

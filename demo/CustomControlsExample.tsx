@@ -22,7 +22,7 @@ export function CustomControlsExample() {
           ref={fullscreenRef}
           style={{position: 'relative', width: '100vw', height: '100vh'}}
         >
-          <Viewer showControls={false}/>
+          <Viewer options={{showNavigationControl: false}}/>
           <Toolbar fullscreenRef={fullscreenRef}/>
         </div>
       </ManifestLoader>
