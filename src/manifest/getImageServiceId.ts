@@ -24,10 +24,29 @@ export function getImageServiceId(
     return null;
   }
   const services = getImageServices(resource);
-  if (!services.length) {
+  if (services.length) {
+    return getId(services[0]) ?? null;
+  }
+
+  return getImageServiceIdWithoutProfileCheck(resource);
+}
+
+/**
+ * Fallback when {@link getImageServices} fails to match the service profile.
+ * E.g.: when manifest uses full profile URL instead of short form ("level1")
+ */
+function getImageServiceIdWithoutProfileCheck(
+  resource: IIIFExternalWebResource
+): Id | null {
+  const service = resource.service;
+  if (!Array.isArray(service) || !service.length) {
     return null;
   }
-  return getId(services[0]) ?? null;
+  const first = service[0];
+  if (typeof first === 'object' && first && 'id' in first) {
+    return first.id as string
+  }
+  return null;
 }
 
 function isExternalWebResource(
