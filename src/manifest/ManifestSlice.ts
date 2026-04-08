@@ -2,6 +2,7 @@ import type { StateCreator } from 'zustand/vanilla';
 import type { Vault } from '@iiif/helpers/vault';
 import type { ViewerStore } from '../ViewerStore.ts';
 import type { Resettable } from '../Resettable.ts';
+import {findCanvasIndex} from "./findCanvasIndex.ts";
 
 export type ManifestState = {
   url: string | null;
@@ -12,7 +13,7 @@ export type ManifestState = {
 
 export type ManifestSlice = Resettable & ManifestState & {
   vault: Vault;
-  loadManifest: (url: string) => Promise<void>;
+  loadManifest: (url: string, initialCanvasId?: string) => Promise<void>;
 };
 
 const defaultManifest: ManifestState = {
@@ -28,15 +29,23 @@ export const createManifestSlice = (
   vault,
   ...defaultManifest,
 
-  loadManifest: async (url) => {
-    set({ url, isLoading: true, error: null });
+  loadManifest: async (url, initialCanvasId) => {
+    set({url, isLoading: true, error: null});
 
     try {
       await vault.loadManifest(url);
-      set({ isLoading: false, error: null });
+
+      const updates: Partial<ViewerStore> = {isLoading: false, error: null};
+      if (initialCanvasId) {
+        const index = findCanvasIndex(vault, url, initialCanvasId);
+        if (index !== -1) {
+          updates.currentIndex = index;
+        }
+      }
+      set(updates);
     } catch (e) {
       const error = e instanceof Error ? e.message : 'Unknown error';
-      set({ isLoading: false, error });
+      set({isLoading: false, error});
     }
   },
 

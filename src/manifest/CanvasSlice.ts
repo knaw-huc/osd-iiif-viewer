@@ -1,6 +1,7 @@
 import type {StateCreator} from 'zustand/vanilla';
 import type {ViewerStore} from '../ViewerStore.ts';
-import type {Resettable} from "../Resettable.ts";
+import type {Resettable} from '../Resettable.ts';
+import {findCanvasIndex} from './findCanvasIndex.ts';
 
 export type CanvasState = {
   currentIndex: number;
@@ -8,6 +9,7 @@ export type CanvasState = {
 
 export type CanvasSlice = Resettable & CanvasState & {
   goToCanvas: (index: number) => void;
+  goToCanvasById: (id: string) => void;
   nextCanvas: () => void;
   prevCanvas: () => void;
 };
@@ -32,6 +34,19 @@ export const createCanvasSlice: StateCreator<
     const manifest = vault.get({id: url, type: 'Manifest'});
     const clamped = Math.max(0, Math.min(index, manifest.items.length - 1));
     set({currentIndex: clamped});
+  },
+
+  goToCanvasById: (id) => {
+    const {vault, url, goToCanvas} = get();
+    if (!url) {
+      return;
+    }
+    const index = findCanvasIndex(vault, url, id);
+    if (index === -1) {
+      console.warn(`Canvas not found: ${id}`);
+      return;
+    }
+    goToCanvas(index);
   },
 
   nextCanvas: () => {
