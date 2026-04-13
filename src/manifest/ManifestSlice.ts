@@ -2,9 +2,11 @@ import type { StateCreator } from 'zustand/vanilla';
 import type { Vault } from '@iiif/helpers/vault';
 import type { ViewerStore } from '../ViewerStore.ts';
 import type { Resettable } from '../Resettable.ts';
-import {findCanvasIndex} from "./findCanvasIndex.ts";
+import {findCanvasIndex} from './findCanvasIndex.ts';
+import {orThrow} from '../util/orThrow.ts';
 
 export type ManifestState = {
+  id: string | null,
   url: string | null;
   isLoading: boolean;
   error: string | null;
@@ -17,6 +19,7 @@ export type ManifestSlice = Resettable & ManifestState & {
 };
 
 const defaultManifest: ManifestState = {
+  id: null,
   url: null,
   isLoading: false,
   isReady: false,
@@ -33,11 +36,18 @@ export const createManifestSlice = (
     set({url, isLoading: true, error: null});
 
     try {
-      await vault.loadManifest(url);
+      const manifest = await vault.loadManifest(url);
 
-      const updates: Partial<ViewerStore> = {isLoading: false, error: null};
+      const id = manifest?.id || orThrow('No manifest');
+      const updates: Partial<ViewerStore> = {
+        id: id,
+        url: url,
+        isLoading: false,
+        error: null,
+      };
+
       if (initialCanvasId) {
-        const index = findCanvasIndex(vault, url, initialCanvasId);
+        const index = findCanvasIndex(vault, id, initialCanvasId);
         if (index !== -1) {
           updates.currentIndex = index;
         }

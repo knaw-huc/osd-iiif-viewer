@@ -5,7 +5,7 @@ import {orThrow} from '../util/orThrow.ts';
 
 export function useCanvas() {
   const vault = useViewerStoreSelector((s) => s.vault);
-  const url = useViewerStoreSelector((s) => s.url);
+  const id = useViewerStoreSelector((s) => s.id);
   const isLoading = useViewerStoreSelector((s) => s.isLoading);
   const currentIndex = useViewerStoreSelector((s) => s.currentIndex);
   const goTo = useViewerStoreSelector((s) => s.goToCanvas);
@@ -17,16 +17,16 @@ export function useCanvas() {
     current: CanvasNormalized | null;
     total: number;
   } => {
-    if (!url || isLoading) {
+    if (!id || isLoading) {
       return {current: null, total: 0};
     }
-    const manifest = vault.get({id: url, type: 'Manifest'});
+    const manifest = vault.get({id, type: 'Manifest'});
     const canvasRef = manifest.items[currentIndex]
       ?? orThrow('No canvas ref for ' + currentIndex);
     const current = vault.get(canvasRef);
     const total = manifest.items.length;
     return {current, total};
-  }, [vault, url, isLoading, currentIndex]);
+  }, [vault, id, isLoading, currentIndex]);
 
   const currentCanvasId = current?.id ?? null;
 

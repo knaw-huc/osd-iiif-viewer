@@ -27,21 +27,21 @@ export const createCanvasSlice: StateCreator<
   ...defaultCanvas,
 
   goToCanvas: (index) => {
-    const {vault, url} = get();
-    if (!url) {
+    const {vault, id: manifestId} = get();
+    if (!manifestId) {
       return;
     }
-    const manifest = vault.get({id: url, type: 'Manifest'});
+    const manifest = vault.get({id: manifestId, type: 'Manifest'});
     const clamped = Math.max(0, Math.min(index, manifest.items.length - 1));
     set({currentIndex: clamped});
   },
 
   goToCanvasById: (id) => {
-    const {vault, url, goToCanvas} = get();
-    if (!url) {
+    const {vault, id: manifestId, goToCanvas} = get();
+    if (!manifestId) {
       return;
     }
-    const index = findCanvasIndex(vault, url, id);
+    const index = findCanvasIndex(vault, manifestId, id);
     if (index === -1) {
       console.warn(`Canvas not found: ${id}`);
       return;
