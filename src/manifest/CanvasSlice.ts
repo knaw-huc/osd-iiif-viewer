@@ -27,13 +27,18 @@ export const createCanvasSlice: StateCreator<
   ...defaultCanvas,
 
   goToCanvas: (index) => {
-    const {vault, id: manifestId} = get();
+    const {vault, id: manifestId, currentIndex} = get();
     if (!manifestId) {
       return;
     }
     const manifest = vault.get({id: manifestId, type: 'Manifest'});
-    const clamped = Math.max(0, Math.min(index, manifest.items.length - 1));
-    set({currentIndex: clamped});
+    const newIndex = Math.max(0, Math.min(index, manifest.items.length - 1));
+    if (newIndex !== currentIndex) {
+      set({
+        currentIndex: newIndex,
+        viewerReady: false
+      });
+    }
   },
 
   goToCanvasById: (id) => {

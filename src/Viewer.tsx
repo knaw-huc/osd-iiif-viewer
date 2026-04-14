@@ -74,7 +74,6 @@ export function Viewer(props: ViewerProps) {
     if (!viewer || !tileSource) {
       return;
     }
-    state.setViewerReady(false);
     viewer.open(tileSource);
   }
 
