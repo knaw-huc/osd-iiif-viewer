@@ -10,7 +10,6 @@ export type ManifestState = {
   url: string | null;
   isLoading: boolean;
   error: string | null;
-  isReady: boolean;
 };
 
 export type ManifestSlice = Resettable & ManifestState & {
@@ -22,7 +21,6 @@ const defaultManifest: ManifestState = {
   id: null,
   url: null,
   isLoading: false,
-  isReady: false,
   error: null,
 };
 
