@@ -29,14 +29,15 @@
   },
   "dependencies": {
     "@iiif/helpers": "^1.5.8",
-    "openseadragon": "^5.0.1",
-    "zustand": "^5.0.9"
+    "openseadragon": "^5.0.1"
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "zustand": "^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
+    "zustand": "^5.0.0",
     "@eslint/js": "^9.39.1",
     "@iiif/presentation-3": "^2.2.3",
     "@stylistic/eslint-plugin": "^4.0.0",
