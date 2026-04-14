@@ -1,4 +1,4 @@
-import {useStore} from 'zustand/index';
+import {useStore} from 'zustand';
 import type {ViewerStore} from './ViewerStore.ts';
 import {useViewerStore} from './useViewerStore.tsx';
 

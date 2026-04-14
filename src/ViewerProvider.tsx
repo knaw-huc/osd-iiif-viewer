@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type {StoreApi} from 'zustand/index';
+import type {StoreApi} from 'zustand';
 import {createViewerStore, type ViewerStore} from './ViewerStore.ts';
 import {ViewerContext} from './ViewerContext.tsx';
 
