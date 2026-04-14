@@ -9,39 +9,39 @@ type OverlayProps = {
 
 export function Overlay({ location, children }: OverlayProps) {
   const viewer = useViewer();
-  const [container] = useState(() => {
-    const el = document.createElement('div');
-    el.style.position = 'absolute';
-    el.style.pointerEvents = 'none';
-    return el;
+  const [overlay] = useState(() => {
+    const div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.style.pointerEvents = 'none';
+    return div;
   });
 
   useEffect(() => {
-    function stopPropagation(e: PointerEvent) {
-      if (e.target !== container) {
-        e.stopPropagation();
+    function stopPropagation(event: PointerEvent) {
+      if (event.target !== overlay) {
+        event.stopPropagation();
       }
     }
-    container.addEventListener('pointerdown', stopPropagation);
+    overlay.addEventListener('pointerdown', stopPropagation);
     return () => {
-      container.removeEventListener('pointerdown', stopPropagation);
+      overlay.removeEventListener('pointerdown', stopPropagation);
     };
-  }, [container]);
+  }, [overlay]);
 
   useEffect(() => {
     if (!viewer) {
       return;
     }
-    viewer.addOverlay({ element: container, location });
+    viewer.addOverlay({ element: overlay, location });
     return () => {
       if (viewer.isOpen()) {
-        viewer.removeOverlay(container);
+        viewer.removeOverlay(overlay);
       }
     };
-  }, [viewer, location, container]);
+  }, [viewer, location, overlay]);
 
   if (!viewer) {
     return null;
   }
-  return createPortal(children, container);
+  return createPortal(children, overlay);
 }
