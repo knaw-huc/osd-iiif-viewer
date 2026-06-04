@@ -1,6 +1,6 @@
 {
   "name": "@knaw-huc/osd-iiif-viewer",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/knaw-huc/osd-iiif-viewer.git"
@@ -37,8 +37,12 @@
     "zustand": "^4.0.0 || ^5.0.0"
   },
   "peerDependenciesMeta": {
-    "@iiif/presentation-3": { "optional": true },
-    "@types/openseadragon": { "optional": true }
+    "@iiif/presentation-3": {
+      "optional": true
+    },
+    "@types/openseadragon": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@iiif/helpers": "^1.5.9",
