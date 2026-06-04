@@ -20,6 +20,7 @@ export default defineConfig({
         /^react/,
         /^zustand/,
         /^openseadragon/,
+        /^@iiif\//,
       ],
       output: {
         entryFileNames: '[name].js',

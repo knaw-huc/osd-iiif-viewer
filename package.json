@@ -27,22 +27,28 @@
     "prepack": "npm run build",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {
-    "@iiif/helpers": "^1.5.8",
-    "openseadragon": "^5.0.1"
-  },
   "peerDependencies": {
+    "@iiif/helpers": "^1.5.9",
+    "@iiif/presentation-3": "^2.2.3",
+    "openseadragon": "^5.0.1",
+    "@types/openseadragon": "^5.0.1",
     "react": ">=18",
     "react-dom": ">=18",
     "zustand": "^4.0.0 || ^5.0.0"
   },
+  "peerDependenciesMeta": {
+    "@iiif/presentation-3": { "optional": true },
+    "@types/openseadragon": { "optional": true }
+  },
   "devDependencies": {
+    "@iiif/helpers": "^1.5.9",
+    "openseadragon": "^5.0.1",
+    "@types/openseadragon": "^5.0.1",
     "zustand": "^5.0.0",
     "@eslint/js": "^9.39.1",
     "@iiif/presentation-3": "^2.2.3",
     "@stylistic/eslint-plugin": "^4.0.0",
     "@types/node": "^24.10.1",
-    "@types/openseadragon": "^5.0.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
