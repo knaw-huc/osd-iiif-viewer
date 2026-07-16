@@ -18,7 +18,7 @@ export function Overlay({ location, children }: OverlayProps) {
 
   useEffect(() => {
     function stopPropagation(event: PointerEvent) {
-      if (event.target !== overlay) {
+      if (event.target !== overlay) { 
         event.stopPropagation();
       }
     }

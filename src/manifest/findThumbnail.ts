@@ -11,5 +11,5 @@ export function findThumbnail(
   if(!id) {
     return null
   }
-  return `/full/,${height}/0/default.jpg`;
+  return `${id}/full/,${height}/0/default.jpg`;
 }
