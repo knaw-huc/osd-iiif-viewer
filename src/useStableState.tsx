@@ -1,6 +1,9 @@
 import {useState} from 'react';
 
-export function useStableProp<T>(
+/**
+ * Keep object reference intact when stringified content remains equal
+ */
+export function useStableState<T>(
   options: T
 ): T {
   const [stable, setStable] = useState(options);

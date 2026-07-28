@@ -4,7 +4,7 @@ import {useViewerStore} from './useViewerStore.tsx';
 import {findTileSource} from './manifest/findTileSource.ts';
 import {useCanvas} from './manifest/useCanvas.tsx';
 import {useManifest} from './manifest/useManifest.tsx';
-import {useStableProp} from './useStableProp.tsx';
+import {useStableState} from './useStableState.tsx';
 
 type ViewerProps = {
   options?: Partial<OsdOptions>;
@@ -23,8 +23,8 @@ export function Viewer(props: ViewerProps) {
   const {current} = useCanvas();
   const tileSource = current ? findTileSource(vault, current) : null;
   const size = useContainerSize(containerRef);
-  const isContainerReady = size.width > 0 && size.height > 0;
-  const options = useStableProp(props.options)
+  const isContainerReady = size.width && size.height;
+  const options = useStableState(props.options)
 
   useEffect(createOsdViewer, [isContainerReady, store, options]);
   function createOsdViewer() {
@@ -103,11 +103,11 @@ function observeResize(
   element: HTMLElement,
   callback: (rect: DOMRect) => void
 ) {
-  const ro = new ResizeObserver((entries) => {
+  const observer = new ResizeObserver((entries) => {
     callback(entries[0].contentRect);
   });
-  ro.observe(element);
-  return () => ro.disconnect();
+  observer.observe(element);
+  return () => observer.disconnect();
 }
 
 function useContainerSize(ref: RefObject<HTMLElement | null>) {
@@ -118,11 +118,11 @@ function useContainerSize(ref: RefObject<HTMLElement | null>) {
     if (!element) {
       return;
     }
-    const rect = element.getBoundingClientRect();
-    setSize({width: rect.width, height: rect.height});
+    const {width, height} = element.getBoundingClientRect();
+    setSize({width, height});
 
-    return observeResize(element, (rect) => {
-      setSize({width: rect.width, height: rect.height});
+    return observeResize(element, ({width, height}) => {
+      setSize({width, height});
     });
   }, [ref]);
 
