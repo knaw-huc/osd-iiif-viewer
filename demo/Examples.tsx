@@ -3,6 +3,7 @@ import {HighlightOverlayExample} from './HighlightOverlayExample.tsx';
 import {CustomControlsExample} from './CustomControlsExample.tsx';
 import {CanvasNavigationExample} from './CanvasNavigationExample.tsx';
 import {MinimalExample} from './MinimalExample.tsx';
+import {LazyCollectionViewerExample} from './LazyCollectionViewerExample.tsx';
 
 export function Examples() {
   const [hash, setHash] = useState(window.location.hash);
@@ -25,6 +26,9 @@ export function Examples() {
   if (hash === '#minimal') {
     return <MinimalExample/>;
   }
+  if (hash === '#lazy') {
+    return <LazyCollectionViewerExample/>;
+  }
 
   return (
     <ul>
@@ -32,6 +36,7 @@ export function Examples() {
       <li><a href="#highlight">Highlight Overlay</a></li>
       <li><a href="#controls">Custom Controls</a></li>
       <li><a href="#navigation">Canvas Navigation</a></li>
+      <li><a href="#lazy">Lazy Loading Collection</a></li>
     </ul>
   );
 }

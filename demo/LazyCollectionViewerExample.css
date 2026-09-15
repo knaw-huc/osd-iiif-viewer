@@ -1,0 +1,52 @@
+.lazy-view {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.scroll-navigation {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    z-index: 10;
+}
+
+.scroll-info {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.scroll-buttons {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.scroll-buttons button {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    font-size: 0.8125rem;
+}
+
+.scroll-buttons button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.scroll-buttons button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
