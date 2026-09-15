@@ -17,18 +17,6 @@ export function Overlay({ location, children }: OverlayProps) {
   });
 
   useEffect(() => {
-    function stopPropagation(event: PointerEvent) {
-      if (event.target !== overlay) { 
-        event.stopPropagation();
-      }
-    }
-    overlay.addEventListener('pointerdown', stopPropagation);
-    return () => {
-      overlay.removeEventListener('pointerdown', stopPropagation);
-    };
-  }, [overlay]);
-
-  useEffect(() => {
     if (!viewer) {
       return;
     }

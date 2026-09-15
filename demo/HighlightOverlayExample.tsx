@@ -1,6 +1,7 @@
 import {
   Overlay,
   useCanvas,
+  usePointerDown,
   useImageInfo,
   useViewerReady,
   Viewer,
@@ -66,6 +67,7 @@ function HighlightViewer() {
     <div style={{width: '100%', height: '100vh'}}>
       <Viewer options={{
         showNavigationControl: false,
+        gestureSettingsMouse: {clickToZoom: false},
       }}/>
       {imageInfo && fragments.map((fragment) => (
         <Overlay key={fragment.id} location={imageInfo.location}>
@@ -93,13 +95,14 @@ type HighlightProps = {
   path: string;
   size: OpenSeadragon.Point;
   onHover: (hovering: boolean, event: React.MouseEvent) => void;
-  onClick: (event: React.MouseEvent) => void;
+  onClick: (event: PointerEvent) => void;
 };
 
 function Highlight(
   {path, size, onHover, onClick}: HighlightProps
 ) {
   const [hovered, setHovered] = useState(false);
+  const handlePointerDown = usePointerDown({onClick});
 
   return (
     <svg
@@ -119,7 +122,7 @@ function Highlight(
           setHovered(false);
           onHover(false, e);
         }}
-        onClick={onClick}
+        onPointerDown={handlePointerDown}
       />
     </svg>
   );

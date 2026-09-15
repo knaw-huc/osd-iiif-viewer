@@ -3,6 +3,7 @@ export { Viewer } from './Viewer.tsx';
 export { useImageInfo } from './useImageInfo.tsx';
 
 export { Overlay } from './Overlay.tsx';
+export { usePointerDown } from './usePointerDown.tsx';
 export { ViewerProvider } from './ViewerProvider';
 export { useViewer } from './useViewer';
 export { useViewerControls } from './useViewerControls';
