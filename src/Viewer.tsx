@@ -74,7 +74,7 @@ export function Viewer(props: ViewerProps) {
     if (!viewer || !tileSource) {
       return;
     }
-    viewer.open(tileSource);
+    viewer.open({tileSource});
   }
 
   useEffect(resizeViewerOnContainerResize, [store]);

@@ -30,8 +30,7 @@
   "peerDependencies": {
     "@iiif/helpers": "^1.5.9",
     "@iiif/presentation-3": "^2.2.3",
-    "openseadragon": "^5.0.1",
-    "@types/openseadragon": "^5.0.1",
+    "openseadragon": "^6.1.1",
     "react": ">=18",
     "react-dom": ">=18",
     "zustand": "^4.0.0 || ^5.0.0"
@@ -39,17 +38,11 @@
   "peerDependenciesMeta": {
     "@iiif/presentation-3": {
       "optional": true
-    },
-    "@types/openseadragon": {
-      "optional": true
     }
   },
   "devDependencies": {
-    "@iiif/helpers": "^1.5.9",
-    "openseadragon": "^5.0.1",
-    "@types/openseadragon": "^5.0.1",
-    "zustand": "^5.0.0",
     "@eslint/js": "^9.39.1",
+    "@iiif/helpers": "^1.5.9",
     "@iiif/presentation-3": "^2.2.3",
     "@stylistic/eslint-plugin": "^4.0.0",
     "@types/node": "^24.10.1",
@@ -60,12 +53,14 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "openseadragon": "^6.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.1"
+    "vitest": "^3.2.1",
+    "zustand": "^5.0.0"
   }
 }
