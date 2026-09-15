@@ -392,6 +392,7 @@ class LazyCanvasTileLoader {
   private loaded = new Map<CanvasId, TiledImage>();
   private pending = new Set<CanvasId>();
   private urlInfoMap = new Map<string, object>();
+  private isClosed = false;
 
   constructor(
     viewer: Viewer,
@@ -404,7 +405,7 @@ class LazyCanvasTileLoader {
   }
 
   update(): void {
-    if (!this.viewer.viewport) {
+    if (!this.isReady()) {
       return;
     }
 
@@ -434,9 +435,16 @@ class LazyCanvasTileLoader {
   }
 
   destroy(): void {
+    this.isClosed = true;
     this.viewer.world.removeAll();
     this.loaded.clear();
     this.pending.clear();
+  }
+
+  private isReady(): boolean {
+    return !this.isClosed
+      && !!this.viewer.element
+      && !!this.viewer.viewport;
   }
 
   private async addScan(image: LazyTiledImage): Promise<void> {
@@ -444,7 +452,7 @@ class LazyCanvasTileLoader {
 
     try {
       const tileSource = await this.fetchInfo(image.imageServiceUrl);
-      if (!this.pending.has(image.canvasId)) {
+      if (!this.pending.has(image.canvasId) || !this.isReady()) {
         return;
       }
 
@@ -456,6 +464,9 @@ class LazyCanvasTileLoader {
         // @ts-expect-error type mismatch
         success: ((event: { item: TiledImage }) => {
           this.pending.delete(image.canvasId);
+          if (this.isClosed) {
+            return;
+          }
           this.loaded.set(image.canvasId, event.item);
         }),
         error: () => {
