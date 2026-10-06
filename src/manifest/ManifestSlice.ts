@@ -12,9 +12,14 @@ export type ManifestState = {
   error: string | null;
 };
 
+export type LoadManifestOptions = {
+  manifest?: unknown;
+  canvasId?: string;
+};
+
 export type ManifestSlice = Resettable & ManifestState & {
   vault: Vault;
-  loadManifest: (url: string, initialCanvasId?: string) => Promise<void>;
+  loadManifest: (url: string, options?: LoadManifestOptions) => Promise<void>;
 };
 
 const defaultManifest: ManifestState = {
@@ -30,13 +35,13 @@ export const createManifestSlice = (
   vault,
   ...defaultManifest,
 
-  loadManifest: async (url, initialCanvasId) => {
+  loadManifest: async (url, {manifest, canvasId} = {}) => {
     set({url, isLoading: true, error: null});
 
     try {
-      const manifest = await vault.loadManifest(url);
+      const loaded = await vault.loadManifest(url, manifest);
 
-      const id = manifest?.id || orThrow('No manifest');
+      const id = loaded?.id || orThrow('No manifest');
       const updates: Partial<ViewerStore> = {
         id: id,
         url: url,
@@ -44,8 +49,8 @@ export const createManifestSlice = (
         error: null,
       };
 
-      if (initialCanvasId) {
-        const index = findCanvasIndex(vault, id, initialCanvasId);
+      if (canvasId) {
+        const index = findCanvasIndex(vault, id, canvasId);
         if (index !== -1) {
           updates.currentIndex = index;
         }
