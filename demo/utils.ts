@@ -1,4 +1,4 @@
-import type {AnnotationBody, Body} from '@iiif/presentation-3';
+import type {AnnotationBody, Body} from '@iiif/parser/presentation-3/types';
 
 export async function fetchJson<T>(url: string): Promise<T> {
   const response = await fetch(url);

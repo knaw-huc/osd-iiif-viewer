@@ -1,11 +1,11 @@
 import type {Vault} from '@iiif/helpers/vault';
-import type {CanvasNormalized} from '@iiif/presentation-3-normalized';
 import type {
-  IIIFExternalWebResource,
-  SpecificResource
-} from '@iiif/presentation-3';
+  CanvasNormalized
+} from '@iiif/parser/presentation-3-normalized/types';
+import type {IIIFExternalWebResource} from '@iiif/parser/presentation-3/types';
 import {
-  createPaintingAnnotationsHelper
+  createPaintingAnnotationsHelper,
+  type Paintables
 } from '@iiif/helpers/painting-annotations';
 import {getImageServices, getId} from '@iiif/parser/image-3';
 import type {Id} from '../Id.ts';
@@ -49,8 +49,10 @@ function getImageServiceIdWithoutProfileCheck(
   return null;
 }
 
+type PaintableResource = Paintables['items'][number]['resource'];
+
 function isExternalWebResource(
-  resource: IIIFExternalWebResource | SpecificResource
+  resource: PaintableResource
 ): resource is IIIFExternalWebResource {
   return resource.type !== 'SpecificResource';
 }

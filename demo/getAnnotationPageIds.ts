@@ -1,4 +1,6 @@
-import type { CanvasNormalized } from '@iiif/presentation-3-normalized';
+import type {
+  CanvasNormalized
+} from '@iiif/parser/presentation-3-normalized/types';
 import type {Id} from '../src/Id.ts';
 
 export function getAnnotationPageIds(

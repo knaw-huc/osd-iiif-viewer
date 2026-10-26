@@ -1,5 +1,7 @@
 import type { Vault } from '@iiif/helpers/vault';
-import type { CanvasNormalized } from '@iiif/presentation-3-normalized';
+import type {
+  CanvasNormalized
+} from '@iiif/parser/presentation-3-normalized/types';
 import { getImageServiceId } from './getImageServiceId.ts';
 
 export function findThumbnail(

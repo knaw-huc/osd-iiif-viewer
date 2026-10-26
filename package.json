@@ -28,22 +28,17 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "@iiif/helpers": "^1.5.9",
-    "@iiif/presentation-3": "^2.2.3",
+    "@iiif/helpers": "^4.0.0",
+    "@iiif/parser": "^4.0.0",
     "openseadragon": "^6.1.1",
     "react": ">=18",
     "react-dom": ">=18",
     "zustand": "^4.0.0 || ^5.0.0"
   },
-  "peerDependenciesMeta": {
-    "@iiif/presentation-3": {
-      "optional": true
-    }
-  },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@iiif/helpers": "^1.5.9",
-    "@iiif/presentation-3": "^2.2.3",
+    "@iiif/helpers": "^4.0.0",
+    "@iiif/parser": "^4.0.5",
     "@stylistic/eslint-plugin": "^4.0.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",

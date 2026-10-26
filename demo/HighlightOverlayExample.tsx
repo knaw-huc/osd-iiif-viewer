@@ -12,7 +12,7 @@ import type {
   Annotation,
   AnnotationPage,
   AnnotationTarget, Selector, SpecificResource, Target,Body
-} from '@iiif/presentation-3';
+} from '@iiif/parser/presentation-3/types';
 import {orThrow} from '../src/util/orThrow';
 import {fetchJson, isResourceBody, toArray} from './utils';
 import {ManifestLoader} from './ManifestLoader';
