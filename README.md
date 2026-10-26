@@ -1,5 +1,7 @@
 # @knaw-huc/osd-iiif-viewer
 
+[![npm version](https://img.shields.io/npm/v/@knaw-huc/osd-iiif-viewer.svg?color=green)](https://www.npmjs.com/package/@knaw-huc/osd-iiif-viewer)
+
 Lightweight React wrapper around OpenSeadragon to display and browse image sources from IIIF manifests.
 
 Features:
